@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/15 13:23:51 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:11:42 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct minishell_input
 {
 	char *command;
 	char **args;
-	int  *quoted;
 	char *flag;
 }				t_input;
 

@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:59:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/15 12:03:54 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:05:20 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 typedef struct s_list
 {
 	char			*content;
-	int				quoted;
 	struct s_list	*next;
 }					t_list;
 
@@ -61,7 +60,7 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
-t_list				*ft_lstnew(char *content, int quoted);
+t_list				*ft_lstnew(char *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);
