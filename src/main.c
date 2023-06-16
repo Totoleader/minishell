@@ -3,16 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 11:39:29 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 16:31:26 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void minishell(void)
+t_minishell	*init_minishell(void)
+{
+	t_minishell	*mini;
+
+	mini = malloc(sizeof(t_minishell));
+	if (!mini)
+		exit(1);
+	mini->env = NULL;
+	return (mini);
+}
+
+void	inherit_envp(t_minishell *mini, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		ft_lstadd_back(&mini->env, ft_lstnew(ft_strdup(envp[i++])));
+}
+
+void minishell(t_minishell *mini)
 {
 	t_input command;
 	char *input;
@@ -20,19 +40,32 @@ void minishell(void)
 	while (TRUE)
 	{
 		input = readline("\033[31mminishell $ \033[0m");
+		if (!input)
+			exit(0);
 		// input = ft_calloc(sizeof(char), 100);
 		// ft_strlcpy(input, "allo 123 \"123456 abc\" \'kjlahsdfljhasdlfhadlwhfhil\' ", 55);
 		// ft_strlcpy(input, "asdf lol \"asdfasdfasdf\"asdfasdfasdf", 55);
 		command = parse_input(input);
-		execute_command(command);
+		execute_command(command, mini);
 	}
 	
 }
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
+	t_minishell	*mini;
+
+	(void)argc;
+	(void)argv;
+	// char *cwd = malloc(100);
+	// printf("%s\n", getcwd(cwd, 100));
+	// chdir("/Users/scloutie");
+	// printf("%s\n", getcwd(cwd, 100));
+	
+	mini = init_minishell();
+	inherit_envp(mini, envp);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
-	minishell();
+	minishell(mini);
 	
 	return (0);
 }

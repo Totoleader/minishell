@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 11:11:42 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 16:18:35 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,19 @@ typedef struct minishell_input
 	char *flag;
 }				t_input;
 
+typedef struct s_minishell
+{
+	t_list	*env;
+}				t_minishell;
+
+
 //commands
-void execute_command(t_input command);
+void 	execute_command(t_input command, t_minishell *mini);
 void	echo_(t_input command);
 void	exit_(void);
+void	env_(t_minishell *mini);
+void	export_(t_minishell *mini, t_input command);
+void	unset_(t_minishell *mini, t_input command);
 
 //parsing
 t_input parse_input(char *input);
