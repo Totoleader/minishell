@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 11:31:32 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/19 10:45:27 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	execute_command(t_input command)
+void	execute_command(t_input command, t_minishell *mini)
 {
 	if (!ft_strncmp(command.command, "", 1))
 		return ;
@@ -20,6 +20,14 @@ void	execute_command(t_input command)
 		exit_();
 	else if (!ft_strncmp(command.command, "echo", 5))
 		echo_(command);
+	else if (!ft_strncmp(command.command, "env", 3))
+		env_(mini);
+	else if (!ft_strncmp(command.command, "export", 6))
+		export_(mini, command);
+	else if (!ft_strncmp(command.command, "unset", 5))
+		unset_(mini, command);
+	else if (!ft_strncmp(command.command, "pwd", 3))
+		pwd_(mini);
 	else
 		printf("minishell: %s: command not found\n", command.command);
 }

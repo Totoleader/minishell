@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 13:23:07 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 10:12:17 by scloutie         ###   ########.fr       */
+/*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
+/*   Updated: 2023/06/16 16:50:50 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_(void)
+void	export_(t_minishell *mini, t_input command)
 {
-	//free
-	exit(0);
+	//TODO verifier si format est valide
+	if (command.args[0] == NULL)
+		env_(mini);
+	else
+		ft_lstadd_back(&mini->env, ft_lstnew(ft_strdup(command.args[0])));
 }
