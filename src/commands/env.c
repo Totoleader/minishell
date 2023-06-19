@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 11:09:28 by macote           ###   ########.fr       */
+/*   Created: 2023/06/16 13:20:58 by scloutie          #+#    #+#             */
+/*   Updated: 2023/06/19 10:12:11 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_(t_input command)
+void	env_(t_minishell *mini)
 {
-	// int	i;
+	t_list	*lst;
 
-	(void)command;
-	// i = 0;
-	// while (command.args[i])
-	// {
-	// 	if (i != 0)
-	// 		printf(" ");
-	// 	printf("%s", command.args[i++]);
-	// }
-	// printf("\n");
+	lst = mini->env;
+	while (lst)
+	{
+		printf("%s\n", lst->content);
+		lst = lst->next;
+	}
 }

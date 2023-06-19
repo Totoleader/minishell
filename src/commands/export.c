@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 11:09:28 by macote           ###   ########.fr       */
+/*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
+/*   Updated: 2023/06/16 16:50:50 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_(t_input command)
+void	export_(t_minishell *mini, t_input command)
 {
-	// int	i;
-
-	(void)command;
-	// i = 0;
-	// while (command.args[i])
-	// {
-	// 	if (i != 0)
-	// 		printf(" ");
-	// 	printf("%s", command.args[i++]);
-	// }
-	// printf("\n");
+	//TODO verifier si format est valide
+	if (command.args[0] == NULL)
+		env_(mini);
+	else
+		ft_lstadd_back(&mini->env, ft_lstnew(ft_strdup(command.args[0])));
 }
