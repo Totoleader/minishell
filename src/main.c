@@ -6,11 +6,29 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 16:31:26 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:49:28 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_getenv(t_minishell *mini, const char *varname)
+{
+	t_list	*lst;
+	size_t	varlen;
+
+	if (!mini || !mini->env || !varname)
+		return (NULL);
+	lst = mini->env;
+	varlen = ft_strlen(varname);
+	while (lst)
+	{
+		if (ft_strnstr(lst->content, varname, varlen))
+			return (&lst->content[varlen]);
+		lst = lst->next;
+	}
+	return (NULL);
+}
 
 t_minishell	*init_minishell(void)
 {
@@ -20,6 +38,7 @@ t_minishell	*init_minishell(void)
 	if (!mini)
 		exit(1);
 	mini->env = NULL;
+	ft_memset(mini->cwd, 0, PATH_MAX);
 	return (mini);
 }
 
@@ -54,6 +73,7 @@ void minishell(t_minishell *mini)
 int main(int argc, char **argv, char **envp)
 {
 	t_minishell	*mini;
+	char		*cwd;
 
 	(void)argc;
 	(void)argv;
@@ -64,8 +84,10 @@ int main(int argc, char **argv, char **envp)
 	
 	mini = init_minishell();
 	inherit_envp(mini, envp);
+	cwd = ft_getenv(mini, "PWD=");
+	if (cwd)
+		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
-	
 	return (0);
 }

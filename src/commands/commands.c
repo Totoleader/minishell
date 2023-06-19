@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 16:18:43 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:45:27 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	execute_command(t_input command, t_minishell *mini)
 		export_(mini, command);
 	else if (!ft_strncmp(command.command, "unset", 5))
 		unset_(mini, command);
+	else if (!ft_strncmp(command.command, "pwd", 3))
+		pwd_(mini);
 	else
 		printf("minishell: %s: command not found\n", command.command);
 }

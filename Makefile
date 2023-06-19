@@ -14,6 +14,7 @@ SRCS    := src/main.c \
 			src/commands/env.c \
 			src/commands/export.c \
 			src/commands/unset.c \
+			src/commands/pwd.c \
 
 OBJS    := ${SRCS:.c=.o}
 

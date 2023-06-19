@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:21:06 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/16 16:39:29 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:28:11 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 /**
  * Finds the env variable at specified index and deletes it
+ * If it is the first in the list, adjusts the first pointer
  **/
-static void	env_delat(t_minishell *mini, int index)
+static void	env_delete(t_minishell *mini, int index)
 {
 	int		i;
 	t_list	*temp;
@@ -66,5 +67,5 @@ void	unset_(t_minishell *mini, t_input command)
 	if (!lst)
 		return ;
 	else
-		env_delat(mini, i);
+		env_delete(mini, i);
 }
