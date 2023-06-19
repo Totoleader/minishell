@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 12:17:03 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:56:37 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,47 @@ static void	parse_to_list(char *input, t_list **tokens)
 	}
 }
 
-//transfers args from linked list to "t_input command" struct
-t_input	parse_input(char *input)
+void assign_type(t_token *token)
 {
-	t_list	*tokens;
-	t_input	command;
+	if (!ft_strncmp(token->arg, "<", 2))
+		token->type = REDIR_IN;
+	else if (!ft_strncmp(token->arg, ">", 2))
+		token->type = REDIR_OUT;
+	else if (!ft_strncmp(token->arg, "<<", 3))
+		token->type = REDIR_OUT_DELIM;
+	else if (!ft_strncmp(token->arg, ">>", 3))
+		token->type = REDIR_OUT_APPEND;
+	else if (!ft_strncmp(token->arg, "|", 2))
+		token->type = PIPE;
+	else if (!ft_strncmp(token->arg, "$?", 3))
+		token->type = LAST_COMMAND;
+	else if (!ft_strncmp(token->arg, "$", 1))
+		token->type = VAR_ENV;
+	else
+		token->type = TEXT;
+}
+
+//transfers args from linked list to "t_input command" struct
+t_token	*parse_input(char *input)
+{
+	t_list	*args;
+	t_token	*tokens;
 	t_list	*current;
 	int i;
 
-	tokens = NULL;
-	parse_to_list(input, &tokens);
-	
-	current = tokens;
-	command.command = current->content;
-
-	current = current->next;
-	command.args = ft_calloc(sizeof(char *), ft_lstsize(current) + 1);
-
+	args = NULL;
+	parse_to_list(input, &args);
+	current = args;
+	tokens = ft_calloc(sizeof(t_token), ft_lstsize(args) + 1);	
 	i = 0;
 	while (current)
 	{
-		command.args[i++] = current->content;
+		tokens[i].arg = current->content;
+		assign_type(&tokens[i]);
+		printf("%s /type:%d\n", tokens[i].arg, tokens[i].type);
+		i++;
 		current = current->next;
 	}
-	ft_lstclear(&tokens);
-	return (command);
+	ft_lstclear(&args);
+	return (tokens);
 }

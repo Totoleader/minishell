@@ -6,22 +6,22 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
-/*   Updated: 2023/06/16 12:11:55 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:28:00 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_(t_input command)
-{
-	int	i;
+// void	echo_(t_input command)
+// {
+// 	int	i;
 
-	i = 0;
-	while (command.args[i])
-	{
-		if (i != 0)
-			printf(" ");
-		printf("%s", command.args[i++]);
-	}
-	printf("\n");
-}
+// 	i = 0;
+// 	while (command.args[i])
+// 	{
+// 		if (i != 0)
+// 			printf(" ");
+// 		printf("%s", command.args[i++]);
+// 	}
+// 	printf("\n");
+// }
