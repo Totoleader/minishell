@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
+/*   Updated: 2023/06/20 10:13:14 by scloutie         ###   ########.fr       */
 /*   Updated: 2023/06/19 16:16:59 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -26,7 +27,7 @@
 #define TEXT 1
 #define REDIR_IN 2
 #define REDIR_OUT 3
-#define REDIR_OUT_DELIM 4
+#define REDIR_IN_DELIM 4
 #define REDIR_OUT_APPEND 5
 #define PIPE 6
 #define LAST_COMMAND 7
@@ -66,11 +67,12 @@ typedef struct s_token
 
 typedef struct s_commands
 {
-	int type;
+	int type_in;
+	int	type_out;
 	char **args;
 	char *infile;
 	char *outfile;
-	t_token *next;
+	struct s_commands *next;
 }				t_commands;
 
 //commands
@@ -84,7 +86,8 @@ void	unset_(t_minishell *mini, t_input command);
 void	pwd_(t_minishell *mini);
 
 //parsing
-t_token	*parse_input(char *input);
+t_token		*parse_input(char *input);
+t_commands	*fill_cmd(t_token *tokens);
 char *alloc_copy(char *str);
 
 #endif
