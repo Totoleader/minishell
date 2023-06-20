@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
 /*   Updated: 2023/06/20 10:13:14 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:16:59 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +32,7 @@
 #define PIPE 6
 #define LAST_COMMAND 7
 #define VAR_ENV 8
+#define COMMAND 9
 
 #define NO_QUOTE 0
 #define SINGLE_QUOTE 1
@@ -86,4 +88,6 @@ void	pwd_(t_minishell *mini);
 //parsing
 t_token		*parse_input(char *input);
 t_commands	*fill_cmd(t_token *tokens);
+char *alloc_copy(char *str);
+
 #endif

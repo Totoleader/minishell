@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
 /*   Updated: 2023/06/20 10:32:21 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:30:46 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +54,7 @@ void	inherit_envp(t_minishell *mini, char **envp)
 
 void minishell(t_minishell *mini)
 {
-	// t_token *tokens;
+	t_token *tokens;
 	char *input;
 	
 	mini = NULL;
@@ -64,14 +65,16 @@ void minishell(t_minishell *mini)
 		if (!input)
 			exit(0);
 		// input = ft_calloc(sizeof(char), 100);
-		// ft_strlcpy(input, "allo 123 \"123456 abc\" \'kjlahsdfljhasdlfhadlwhfhil\' ", 55);
-		// ft_strlcpy(input, "asdf lol \"asdfasdfasdf\"asdfasdfasdf", 55);
-		
-		// command = parse_input(input);
+		// ft_strlcpy(input, " <> >", 55);
+		// ft_strlcpy(input, "", 55);
+	
+		tokens = parse_input(input);
 		// execute_command(command, mini);
 	}
 	
+	
 }
+
 
 int main(int argc, char **argv)
 {
@@ -85,6 +88,7 @@ int main(int argc, char **argv)
 	// chdir("/Users/scloutie");
 	// printf("%s\n", getcwd(cwd, 100));
 
+
 	// mini = init_minishell();
 	// inherit_envp(mini, envp);
 	// cwd = ft_getenv(mini, "PWD=");
@@ -92,5 +96,12 @@ int main(int argc, char **argv)
 	// 	ft_strlcpy(mini->cwd, cwd, PATH_MAX);
 	// printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	// minishell(mini);
+	mini = init_minishell();
+	inherit_envp(mini, envp);
+	cwd = ft_getenv(mini, "PWD=");
+	if (cwd)
+		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
+	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
+	minishell(mini);
 	return (0);
 }
