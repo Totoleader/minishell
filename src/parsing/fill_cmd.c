@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/20 12:37:16 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:40:52 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	set_cmd(t_commands **command, t_token *tok, char file)
 {
 	if (!tok->arg || tok->type != TEXT)
 	{
-		printf("Parse error\n");
+		ft_putstr_fd("Parse error\n", 2);
 		return (0);
 	}
 	if (file == 'I')
@@ -87,7 +87,7 @@ void	*clean_exit(t_commands *cmds)
 	i_args = -1;
 	while (cmds != NULL)
 	{
-		while (cmds->args[++i_args])
+		while (cmds->args && cmds->args[++i_args])
 			free(cmds->args);
 		i_args = -1;
 		next = cmds->next;
@@ -113,7 +113,7 @@ t_commands	*fill_cmd(t_token *tokens)
 		{
 			if (!tokens[i_tok + 1].arg)
 			{
-				printf("Parse error\n");
+				ft_putstr_fd("Parse error\n", 2);
 				return (clean_exit(first));
 			}
 			new_cmd(&cmds);
@@ -141,7 +141,7 @@ t_commands	*fill_cmd(t_token *tokens)
 	{
 		printf("---------------------\n");
 		printf("Command: ");
-		for (int i = 0; cmds->args[i]; i++)
+		for (int i = 0; cmds->args && cmds->args[i]; i++)
 			printf("%s ", cmds->args[i]);
 		printf("\n");
 		printf("infile: %s\n", cmds->infile);

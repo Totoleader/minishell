@@ -6,10 +6,10 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 10:13:14 by scloutie         ###   ########.fr       */
-/*   Updated: 2023/06/19 16:16:59 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/20 14:20:18 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -77,13 +77,14 @@ typedef struct s_commands
 
 //commands
 char	*ft_getenv(t_minishell *mini, const char *varname);
-void 	execute_command(t_input command, t_minishell *mini);
+void 	execute_command(t_commands *cmds, t_minishell *mini);
 void	echo_(t_input command);
 void	exit_(void);
 void	env_(t_minishell *mini);
 void	export_(t_minishell *mini, t_input command);
 void	unset_(t_minishell *mini, t_input command);
 void	pwd_(t_minishell *mini);
+void	cd_(t_commands *cmds, t_minishell *mini);
 
 //parsing
 t_token		*parse_input(char *input);

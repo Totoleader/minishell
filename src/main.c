@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 12:27:10 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:17:44 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void minishell(t_minishell *mini)
 {
 	t_token *tokens;
 	char *input;
-	
-	mini = NULL;
 
 	while (TRUE)
 	{
@@ -75,8 +73,9 @@ void minishell(t_minishell *mini)
 		// ft_strlcpy(input, "", 55);
 	
 		tokens = parse_input(input);
-		// execute_command(command, mini);
-		fill_cmd(tokens);
+		t_commands *cmds = fill_cmd(tokens);
+		execute_command(cmds, mini);
+		
 	}
 }
 
@@ -94,11 +93,7 @@ int main(int argc, char **argv, char **envp)
 	cwd = ft_getenv(mini, "PWD");
 	if (cwd)
 		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	getcwd(cwd, PATH_MAX);
-	printf("%s\n", cwd);
-	chdir("..");
-	getcwd(cwd, PATH_MAX);
-	printf("%s\n", cwd);
+	getcwd(mini->cwd, PATH_MAX);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
 	return (0);
