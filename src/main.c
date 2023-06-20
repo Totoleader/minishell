@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 11:07:44 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/20 10:32:21 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void minishell(t_minishell *mini)
 	
 }
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
-	t_minishell	*mini;
-	char		*cwd;
+	// t_minishell	*mini;
+	// char		*cwd;
 
 	(void)argc;
 	(void)argv;
@@ -84,13 +84,13 @@ int main(int argc, char **argv, char **envp)
 	// printf("%s\n", getcwd(cwd, 100));
 	// chdir("/Users/scloutie");
 	// printf("%s\n", getcwd(cwd, 100));
-	
-	mini = init_minishell();
-	inherit_envp(mini, envp);
-	cwd = ft_getenv(mini, "PWD=");
-	if (cwd)
-		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
-	minishell(mini);
+
+	// mini = init_minishell();
+	// inherit_envp(mini, envp);
+	// cwd = ft_getenv(mini, "PWD=");
+	// if (cwd)
+	// 	ft_strlcpy(mini->cwd, cwd, PATH_MAX);
+	// printf("\033[31mWelcome to minishell :)\n\n\033[0m");
+	// minishell(mini);
 	return (0);
 }

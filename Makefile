@@ -8,6 +8,7 @@ LIBS    := $(LIBFT)/libft.a
 
 SRCS    := src/main.c \
 			src/parsing/parse.c \
+			src/parsing/fill_cmd.c \
 			src/commands/commands.c \
 			src/commands/echo.c \
 			src/commands/exit.c \
