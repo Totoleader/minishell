@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 11:06:10 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:16:59 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #define PIPE 6
 #define LAST_COMMAND 7
 #define VAR_ENV 8
+#define COMMAND 9
 
 #define NO_QUOTE 0
 #define SINGLE_QUOTE 1
@@ -60,10 +61,17 @@ typedef struct s_token
 {
 	char *arg;
 	int type;
-	// int interpret_meta;
-	// t_token *left_child;
-	// t_token *right_child;
+	int interpret_meta;
 }				t_token;
+
+typedef struct s_commands
+{
+	int type;
+	char **args;
+	char *infile;
+	char *outfile;
+	t_token *next;
+}				t_commands;
 
 //commands
 char	*ft_getenv(t_minishell *mini, const char *varname);
@@ -77,5 +85,6 @@ void	pwd_(t_minishell *mini);
 
 //parsing
 t_token	*parse_input(char *input);
+char *alloc_copy(char *str);
 
 #endif
