@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 10:25:24 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/20 10:59:34 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void assign_type(t_token *token)
 	else if (!ft_strncmp(token->arg, ">", 2))
 		token->type = REDIR_OUT;
 	else if (!ft_strncmp(token->arg, "<<", 3))
-		token->type = REDIR_OUT_DELIM;
+		token->type = REDIR_IN_DELIM;
 	else if (!ft_strncmp(token->arg, ">>", 3))
 		token->type = REDIR_OUT_APPEND;
 	else if (!ft_strncmp(token->arg, "|", 2))

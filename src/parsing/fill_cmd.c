@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/20 10:16:10 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:37:16 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,13 @@ int	fill_args(t_commands **command, t_token *tokens)
 	return (i);
 }
 
-void	set_cmd(t_commands **command, t_token *tok, char file)
+int	set_cmd(t_commands **command, t_token *tok, char file)
 {
+	if (!tok->arg || tok->type != TEXT)
+	{
+		printf("Parse error\n");
+		return (0);
+	}
 	if (file == 'I')
 	{
 		(*command)->infile = tok->arg;
@@ -71,6 +76,25 @@ void	set_cmd(t_commands **command, t_token *tok, char file)
 		(*command)->outfile = tok->arg;
 		(*command)->type_out = (tok - 1)->type;
 	}
+	return (1);
+}
+
+void	*clean_exit(t_commands *cmds)
+{
+	t_commands	*next;
+	int			i_args;
+
+	i_args = -1;
+	while (cmds != NULL)
+	{
+		while (cmds->args[++i_args])
+			free(cmds->args);
+		i_args = -1;
+		next = cmds->next;
+		free(cmds);
+		cmds = next;
+	}
+	return (NULL);
 }
 
 t_commands	*fill_cmd(t_token *tokens)
@@ -87,6 +111,11 @@ t_commands	*fill_cmd(t_token *tokens)
 	{
 		if (tokens[i_tok].type == PIPE)
 		{
+			if (!tokens[i_tok + 1].arg)
+			{
+				printf("Parse error\n");
+				return (clean_exit(first));
+			}
 			new_cmd(&cmds);
 			cmds = cmds->next;
 			i_tok++;
@@ -94,11 +123,31 @@ t_commands	*fill_cmd(t_token *tokens)
 		}
 		else if (tokens[i_tok].type == TEXT)
 			i_tok += (fill_args(&cmds, &tokens[i_tok]) - 1);
-		else if ((tokens[i_tok].type == REDIR_IN || tokens[i_tok].type == REDIR_IN_DELIM) && tokens[i_tok + 1].arg)
-			set_cmd(&cmds, &tokens[++i_tok], 'I');
-		else if ((tokens[i_tok].type == REDIR_OUT || tokens[i_tok].type == REDIR_OUT_APPEND) && tokens[i_tok + 1].arg)
-			set_cmd(&cmds, &tokens[++i_tok], 'O');
+		else if ((tokens[i_tok].type == REDIR_IN || tokens[i_tok].type == REDIR_IN_DELIM))
+		{
+			if (!set_cmd(&cmds, &tokens[++i_tok], 'I'))
+				return (clean_exit(first));
+		}
+		else if ((tokens[i_tok].type == REDIR_OUT || tokens[i_tok].type == REDIR_OUT_APPEND))
+		{
+			if (!set_cmd(&cmds, &tokens[++i_tok], 'O'))
+				return (clean_exit(first));
+		}
 		i_tok++;
 	}
+
+	cmds = first;
+	while (cmds)
+	{
+		printf("---------------------\n");
+		printf("Command: ");
+		for (int i = 0; cmds->args[i]; i++)
+			printf("%s ", cmds->args[i]);
+		printf("\n");
+		printf("infile: %s\n", cmds->infile);
+		printf("outfile: %s\n", cmds->outfile);
+		cmds = cmds->next;
+	}
+
 	return (first);
 }
