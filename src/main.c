@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 14:17:44 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:12:01 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,28 @@ char	*ft_getenv(t_minishell *mini, const char *varname)
 	return (NULL);
 }
 
+t_list	*ft_getenv_node(t_minishell *mini, const char *varname)
+{
+	t_list	*lst;
+	char	*to_find;
+
+	lst = mini->env;
+	to_find = ft_strjoin(varname, "=");
+	if (!to_find)
+		return (NULL);
+	while (lst)
+	{
+		if (ft_strnstr(lst->content, to_find, ft_strlen(to_find)))
+		{
+			free(to_find);
+			return (lst);
+		}
+		lst = lst->next;
+	}
+	free(to_find);
+	return (NULL);
+}
+
 t_minishell	*init_minishell(void)
 {
 	t_minishell	*mini;
@@ -58,6 +80,15 @@ void	inherit_envp(t_minishell *mini, char **envp)
 		ft_lstadd_back(&mini->env, ft_lstnew(ft_strdup(envp[i++])));
 }
 
+int up_arr(int count, int key)
+{
+	(void)count;
+	(void)key;
+	printf("up arrow pressed\n");
+	rl_on_new_line();
+	return (0);
+}
+
 void minishell(t_minishell *mini)
 {
 	t_token *tokens;
@@ -65,9 +96,11 @@ void minishell(t_minishell *mini)
 
 	while (TRUE)
 	{
+		
 		input = readline("\033[31mminishell $ \033[0m");
 		if (!input)
 			exit(0);
+		add_history(input);
 		// input = ft_calloc(sizeof(char), 100);
 		// ft_strlcpy(input, " <> >", 55);
 		// ft_strlcpy(input, "", 55);
@@ -75,15 +108,15 @@ void minishell(t_minishell *mini)
 		tokens = parse_input(input);
 		t_commands *cmds = fill_cmd(tokens);
 		execute_command(cmds, mini);
-		
+		// free command structs and tokens
 	}
 }
 
 
 int main(int argc, char **argv, char **envp)
 {
-	t_minishell	*mini;
-	char		*cwd;
+	t_minishell		*mini;
+	char			*cwd;
 
 	(void)argc;
 	(void)argv;
