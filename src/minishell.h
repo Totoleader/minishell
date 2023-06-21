@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 14:20:18 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:43:18 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
 # include <stdio.h>
 # include <libc.h>
 # include <limits.h>
@@ -76,7 +79,6 @@ typedef struct s_commands
 }				t_commands;
 
 //commands
-char	*ft_getenv(t_minishell *mini, const char *varname);
 void 	execute_command(t_commands *cmds, t_minishell *mini);
 void	echo_(t_input command);
 void	exit_(void);
@@ -90,5 +92,9 @@ void	cd_(t_commands *cmds, t_minishell *mini);
 t_token		*parse_input(char *input);
 t_commands	*fill_cmd(t_token *tokens);
 char *alloc_copy(char *str);
+
+//utils
+char	*ft_getenv(t_minishell *mini, const char *varname);
+t_list	*ft_getenv_node(t_minishell *mini, const char *varname);
 
 #endif

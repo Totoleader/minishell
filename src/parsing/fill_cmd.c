@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/20 13:40:52 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:43:39 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ t_commands	*fill_cmd(t_token *tokens)
 		}
 		i_tok++;
 	}
-
 	cmds = first;
 	while (cmds)
 	{
