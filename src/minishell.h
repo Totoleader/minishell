@@ -6,10 +6,9 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/21 12:10:13 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/21 13:25:47 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -17,6 +16,9 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
 # include <stdio.h>
 # include <libc.h>
 # include <limits.h>
@@ -82,14 +84,14 @@ typedef struct s_count
 }				t_count;
 
 //commands
-char	*ft_getenv(t_minishell *mini, const char *varname);
-void 	execute_command(t_input command, t_minishell *mini);
+void 	execute_command(t_commands *cmds, t_minishell *mini);
 void	echo_(t_input command);
 void	exit_(void);
 void	env_(t_minishell *mini);
 void	export_(t_minishell *mini, t_input command);
 void	unset_(t_minishell *mini, t_input command);
 void	pwd_(t_minishell *mini);
+void	cd_(t_commands *cmds, t_minishell *mini);
 
 //parsing
 t_token		*parse_input(char *input, t_minishell *mini);
@@ -97,5 +99,9 @@ t_commands	*fill_cmd(t_token *tokens);
 char *alloc_copy(char *str);
 void trimmer(t_token *token);
 void interpret_dollar_signs(t_token *token, t_minishell *mini);
+
+//utils
+char	*ft_getenv(t_minishell *mini, const char *varname);
+t_list	*ft_getenv_node(t_minishell *mini, const char *varname);
 
 #endif

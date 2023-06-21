@@ -1,6 +1,6 @@
 NAME    := minishell
 CFLAGS  := -Wall -Wextra -Werror -g
-LDFLAGS := -L/Users/$(USER)/.brew/Cellar/readline/8.2.1 -lreadline
+LDFLAGS := -L/Users/$(USER)/.brew/Cellar/readline/8.2.1 -lreadline -ltermcap
 
 HEADERS := -I ./include
 LIBFT   := ./libft
@@ -19,6 +19,7 @@ SRCS    := src/main.c \
 			src/commands/export.c \
 			src/commands/unset.c \
 			src/commands/pwd.c \
+			src/commands/cd.c \
 
 OBJS    := ${SRCS:.c=.o}
 
