@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/20 10:16:10 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:01:00 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,15 @@ t_commands	*fill_cmd(t_token *tokens)
 			set_cmd(&cmds, &tokens[++i_tok], 'O');
 		i_tok++;
 	}
+	// while (first)
+	// {
+	// 	printf("%s\n", *first->args);
+	// 	printf("%s\n", first->infile);
+	// 	printf("%s\n", first->outfile);
+	// 	printf("%d\n", first->type_in);
+	// 	printf("%d\n\n", first->type_out);
+	// 	first = first->next;
+	// }
+	
 	return (first);
 }

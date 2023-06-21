@@ -6,12 +6,28 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:20:09 by macote            #+#    #+#             */
-/*   Updated: 2023/06/19 15:15:17 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/20 11:16:29 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//helper to alloc_copy()
+static void alloc_copy_special_cases(char *str, int *i)
+{
+	if (str[0] == '>' && str[1] && str[1] == '>')
+		*i = 2;
+	else if (str[0] == '<' && str[1] && str[1] == '<')
+		*i = 2;
+	else if (str[0] == '>')
+		*i = 1;
+	else if (str[0] == '<')
+		*i = 1;
+	else if (str[0] == '|')
+		*i = 1;
+}
+
+//reallocate and copy a string without the quotes
 char *alloc_copy(char *str)
 {
 	int i;
@@ -34,16 +50,7 @@ char *alloc_copy(char *str)
 		}
 		i++;
 	}
-	if (str[0] == '>' && str[1] && str[1] == '>')
-		i = 2;
-	else if (str[0] == '<' && str[1] && str[1] == '<')
-		i = 2;
-	else if (str[0] == '>')
-		i = 1;
-	else if (str[0] == '<')
-		i = 1;
-	else if (str[0] == '|')
-		i = 1;
+	alloc_copy_special_cases(str, &i);
 	out = ft_calloc(sizeof(char), i + 1);
 	ft_strlcpy(out, str, i + 1);
 	return (out);

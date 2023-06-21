@@ -9,7 +9,9 @@ LIBS    := $(LIBFT)/libft.a
 SRCS    := src/main.c \
 			src/parsing/parse.c \
 			src/parsing/fill_cmd.c \
+			src/parsing/interpret_dollar_sign.c \
 			src/parsing/parse_utils.c \
+			src/parsing/trim_quotes.c \
 			src/commands/commands.c \
 			src/commands/echo.c \
 			src/commands/exit.c \

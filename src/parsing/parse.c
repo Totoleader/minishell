@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 10:25:24 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/20 14:55:41 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ static void find_start_of_arg(char *input, int *i, t_list **tokens)
 }
 
 //null terminates the arg
-static void find_end_of_arg(char *input, int *i)//some things will be broken with broken with quotes/////////////////////
+static void *find_end_of_arg(char *input, int *i)//some things will be broken with broken with quotes/////////////////////
 {
 	char quote;
 
 	if (input[(*i) + 1] && ((input[(*i)] == '>' && input[(*i) + 1] == '>') || (input[(*i)] == '<' && input[(*i) + 1] == '<')))
 	{
 		(*i) = (*i) + 2;
-		return ;
+		return (NULL);
 	}
 	else if (input[(*i)] == '|' || input[(*i)] == '<' || input[(*i)] == '>')
-	{
-		(*i)++;
-		return ;
-	}
+		return ((*i)++, NULL);
 	while (input[(*i)] && input[(*i)] != ' ' && input[(*i)] != '|' && input[(*i)] != '<' && input[(*i)] != '>')
 	{
 		if (input[(*i)] == '\"' || input[(*i)] == '\'')
@@ -51,6 +48,7 @@ static void find_end_of_arg(char *input, int *i)//some things will be broken wit
 		}
 		(*i)++;
 	}
+	return (NULL);
 }
 
 //puts each arg into a node in a linked list
@@ -59,8 +57,6 @@ static void	parse_to_list(char *input, t_list **tokens)
 	int	i;
 	
 	i = 0;
-	// if (!input[i])
-	// 	ft_lstadd_back(tokens, ft_lstnew(""));
 	while (input[i])
 	{
 		find_start_of_arg(input, &i, tokens);
@@ -69,6 +65,7 @@ static void	parse_to_list(char *input, t_list **tokens)
 	free(input);
 }
 
+//assigns the type of the token so it can easily manipulated
 void assign_type(t_token *token)
 {
 	if (!ft_strncmp(token->arg, "<", 2))
@@ -76,83 +73,19 @@ void assign_type(t_token *token)
 	else if (!ft_strncmp(token->arg, ">", 2))
 		token->type = REDIR_OUT;
 	else if (!ft_strncmp(token->arg, "<<", 3))
-		token->type = REDIR_OUT_DELIM;
+		token->type = REDIR_IN_DELIM;
 	else if (!ft_strncmp(token->arg, ">>", 3))
 		token->type = REDIR_OUT_APPEND;
 	else if (!ft_strncmp(token->arg, "|", 2))
 		token->type = PIPE;
 	else if (!ft_strncmp(token->arg, "$?", 3))
 		token->type = LAST_COMMAND;
-	else if (!ft_strncmp(token->arg, "$", 1))
-		token->type = VAR_ENV;
 	else
 		token->type = TEXT;
 }
 
-void trimmer(t_token *token)
-{
-	int i;
-	int count;
-	char quote;
-	char *trimmed_string;
-
-	i = 0;
-	count = 0;
-	while (token->arg[i])
-	{
-		if (token->arg[i] == '\"' || token->arg[i] == '\'')
-		{
-			quote = token->arg[i];
-			i++;
-			while (token->arg[i] && token->arg[i] != quote)
-			{
-				count++;
-				i++;
-			}
-			i++;
-		}
-		if (token->arg[i++])
-			count++;
-	}
-	trimmed_string = ft_calloc(sizeof(char), count + 1);
-	i = 0;
-	count = 0;
-	while (token->arg[i])
-	{
-		if (token->arg[i] == '\"' || token->arg[i] == '\'')
-		{
-			quote = token->arg[i];
-			i++;
-			while (token->arg[i] && token->arg[i] != quote)
-				trimmed_string[count++] = token->arg[i++];
-			i++;
-		}
-		else
-			trimmed_string[count++] = token->arg[i++];
-	}
-	free(token->arg);
-	token->arg = trimmed_string;
-}
-
-void trim_quotes(t_token **token, int size)
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		// if (ft_strchr(ft_strchr(token[i]->arg, '\"') + 1, '\"'))
-		// {
-		// 	/* code */
-		// }
-		trimmer(token[i]);
-		i++;
-	}
-	
-}
-
 //transfers args from linked list to "t_input command" struct
-t_token	*parse_input(char *input)
+t_token	*parse_input(char *input, t_minishell *mini)
 {
 	t_list	*args;
 	t_token	*tokens;
@@ -168,12 +101,13 @@ t_token	*parse_input(char *input)
 	{
 		tokens[i].arg = current->content;
 		assign_type(&tokens[i]);
+		interpret_dollar_signs(&tokens[i], mini);
 		trimmer(&tokens[i]);
 		printf("%s type:%d\n", tokens[i].arg, tokens[i].type);
 		i++;
 		current = current->next;
 	}
-	// trim_quotes(&tokens, ft_lstsize(args));
+	tokens[i].arg = NULL;
 	if (args)
 		ft_lstclear(&args);
 	return (tokens);
