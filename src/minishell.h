@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 12:54:08 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:16:02 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 
 #define READ 0
 #define WRITE 1
+
+#define IN 0
+#define OUT 1
 
 #define TEXT 1
 #define REDIR_IN 2
@@ -112,5 +115,13 @@ void interpret_dollar_signs(t_token *token, t_minishell *mini);
 //utils
 char	*ft_getenv(t_minishell *mini, const char *varname);
 t_list	*ft_getenv_node(t_minishell *mini, const char *varname);
+int	get_path(t_commands *cmd, t_minishell *mini);
+char	*join_path(char *dir, char *cmd_name);
+void	ft_free_tab(char **tabl);
+char	**split_env(t_minishell *mini);
+void redir(t_commands *cmd, int is_not_first, int *pipe_fd);
+void	dup2_(int fd, int std);
+void reset_std_in_out(int stdin_backup, int stdout_backup);
+
 
 #endif

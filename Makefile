@@ -21,6 +21,7 @@ SRCS    := src/main.c \
 			src/commands/pwd.c \
 			src/commands/cd.c \
 			src/commands/path.c \
+			src/commands/commands_utils.c \
 
 OBJS    := ${SRCS:.c=.o}
 
