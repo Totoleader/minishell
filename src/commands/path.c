@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/28 11:26:27 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 11:26:38 by macote           ###   ########.fr       */
+/*   Created: 2023/06/28 11:26:50 by scloutie          #+#    #+#             */
+/*   Updated: 2023/06/28 13:50:37 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int	get_path(t_commands *cmd, t_minishell *mini)
 		free(cmd->args[0]);
 	}
 	ft_free_tab(tabenv);
+	cmd->args[0] = ft_strdup(cmd_name);
 	return (0);
 }
