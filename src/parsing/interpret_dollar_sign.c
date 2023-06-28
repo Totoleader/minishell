@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/06/21 13:44:25 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/26 12:17:47 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,7 @@ void interpret_dollar_sign_helper(char *args, t_list **vars, int *i)
 		
 		if (args[(*i)] == '$' && args[(*i) + 1] && args[(*i) + 1] != '\'' && args[(*i) + 1] != '\"' && args[(*i) + 1] != ' ' && args[(*i) + 1] != '$')
 		{
-			args = &args[(*i)];
-			ft_lstadd_back(vars, ft_lstnew(get_var_env_name(&args[1])));
-			(*i) = 0;
+			ft_lstadd_back(vars, ft_lstnew(get_var_env_name(&args[(*i) + 1])));
 		}
 		(*i)++;
 }

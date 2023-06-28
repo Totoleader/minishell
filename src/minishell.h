@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/27 12:42:46 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:38:28 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+#define READ 0
+#define WRITE 1
 
 #define TEXT 1
 #define REDIR_IN 2
@@ -88,7 +91,8 @@ typedef struct s_count
 
 //commands
 void 	execute_command(t_commands *cmds, t_minishell *mini);
-void	echo_(t_commands *command);
+void	exec_cmd_master(t_commands *cmds, t_minishell *mini);
+void	echo_(char **args);
 void	exit_(void);
 void	env_(t_minishell *mini);
 void	export_(t_minishell *mini, t_commands *command);

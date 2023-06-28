@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/22 12:59:42 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:48:08 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_token	*parse_input(char *input, t_minishell *mini)
 		assign_type(&tokens[i]);
 		interpret_dollar_signs(&tokens[i], mini);
 		trimmer(&tokens[i]);
-		printf("%s type:%d\n", tokens[i].arg, tokens[i].type);
+		// printf("%s type:%d\n", tokens[i].arg, tokens[i].type);
 		i++;
 		current = current->next;
 	}
