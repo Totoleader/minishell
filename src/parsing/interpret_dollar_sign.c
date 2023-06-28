@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/06/21 12:27:56 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/26 12:17:47 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char *get_var_env_name(char *str)
 }
 
 // interpret_dollar_signs() helper
-void interpret_dollar_sign_helper(char *args, t_list *vars, int *i)
+void interpret_dollar_sign_helper(char *args, t_list **vars, int *i)
 {
 	if (args[(*i)] == '\'' && ft_strchr(&args[(*i) + 1], '\''))
 		{
@@ -131,9 +131,7 @@ void interpret_dollar_sign_helper(char *args, t_list *vars, int *i)
 		
 		if (args[(*i)] == '$' && args[(*i) + 1] && args[(*i) + 1] != '\'' && args[(*i) + 1] != '\"' && args[(*i) + 1] != ' ' && args[(*i) + 1] != '$')
 		{
-			args = &args[(*i)];
-			ft_lstadd_back(&vars, ft_lstnew(get_var_env_name(&args[1])));
-			(*i) = 0;
+			ft_lstadd_back(vars, ft_lstnew(get_var_env_name(&args[(*i) + 1])));
 		}
 		(*i)++;
 }
@@ -152,7 +150,7 @@ void interpret_dollar_signs(t_token *token, t_minishell *mini)
 	args = token->arg;
 	while (token->type == TEXT && args[i])
 	{
-		interpret_dollar_sign_helper(args, vars, &i);
+		interpret_dollar_sign_helper(args, &vars, &i);
 	}
 	current = vars;
 	while (current)

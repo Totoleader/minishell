@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/21 13:26:27 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/22 13:08:07 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	new_cmd(t_commands **cmds)
 	if (!new)
 		exit(1); /* free */
 	ft_memset(new, 0, sizeof(t_commands));
+	new->infile_fd = -1;
+	new->outfile_fd = -1;
 	if (*cmds == NULL)
 		*cmds = new;
 	else
@@ -135,18 +137,18 @@ t_commands	*fill_cmd(t_token *tokens)
 		}
 		i_tok++;
 	}
-	cmds = first;
-	while (cmds)
-	{
-		printf("---------------------\n");
-		printf("Command: ");
-		for (int i = 0; cmds->args && cmds->args[i]; i++)
-			printf("%s ", cmds->args[i]);
-		printf("\n");
-		printf("infile: %s\n", cmds->infile);
-		printf("outfile: %s\n", cmds->outfile);
-		cmds = cmds->next;
-	}
+	// cmds = first;
+	// while (cmds)
+	// {
+	// 	printf("---------------------\n");
+	// 	printf("Command: ");
+	// 	for (int i = 0; cmds->args && cmds->args[i]; i++)
+	// 		printf("%s ", cmds->args[i]);
+	// 	printf("\n");
+	// 	printf("infile: %s\n", cmds->infile);
+	// 	printf("outfile: %s\n", cmds->outfile);
+	// 	cmds = cmds->next;
+	// }
 
 	return (first);
 }

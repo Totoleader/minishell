@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/21 13:25:28 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/26 13:34:22 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,10 @@ void minishell(t_minishell *mini)
 {
 	t_token *tokens;
 	char *input;
-
 	while (TRUE)
 	{
 		
-		input = readline("\033[31mminishell $ \033[0m");
+		input = readline("minishell $ ");
 		if (!input)
 			exit(0);
 		add_history(input);
@@ -106,7 +105,8 @@ void minishell(t_minishell *mini)
 	
 		tokens = parse_input(input, mini);
 		t_commands *cmds = fill_cmd(tokens);
-		execute_command(cmds, mini);
+		
+		exec_cmd_master(cmds, mini);
 		// free command structs and tokens
 	}
 }
@@ -120,6 +120,8 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
+
+	
 	mini = init_minishell();
 	inherit_envp(mini, envp);
 	cwd = ft_getenv(mini, "PWD");
