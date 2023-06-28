@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/26 13:34:22 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/28 14:12:00 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,20 +108,47 @@ void minishell(t_minishell *mini)
 	}
 }
 
+void	sig_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (signo == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
 
 int main(int argc, char **argv, char **envp)
 {
-	t_minishell		*mini;
+	t_minishell			*mini;
+	struct sigaction	sa;
+	struct termios		term;
 
 	(void)argc;
 	(void)argv;
+	
+	// Term stuff
+	tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag &= ~ECHOCTL;	// Turns off all echo ctrl characters (like ^C and ^\)
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+	// Signal stuff
+	sa.sa_handler = sig_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	
 	mini = init_minishell(envp);
 	inherit_envp(mini, envp);
-	cwd = ft_getenv(mini, "PWD");
-	if (cwd)
-		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	getcwd(mini->cwd, PATH_MAX);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
+	rl_clear_history();
 	return (0);
 }

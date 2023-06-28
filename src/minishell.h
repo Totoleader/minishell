@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/22 12:38:28 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/28 12:54:08 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <stdlib.h>
 # include <term.h>
 # include <termios.h>
-# include <curses.h>
-# include <stdio.h>
 # include <libc.h>
 # include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdio.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #define READ 0
 #define WRITE 1
@@ -99,6 +100,7 @@ void	export_(t_minishell *mini, t_commands *command);
 void	unset_(t_minishell *mini, t_commands *command);
 void	pwd_(t_minishell *mini);
 void	cd_(t_commands *cmds, t_minishell *mini);
+int		get_path(t_commands *cmd, t_minishell *mini);
 
 //parsing
 t_token		*parse_input(char *input, t_minishell *mini);
