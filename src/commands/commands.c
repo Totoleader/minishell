@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 14:39:45 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/28 14:56:32 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,9 +215,6 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 		is_not_first++;
 		current = current->next;
 	}
-	
-
 	//bien gérer les fd / pipes
-
 	//
 }
