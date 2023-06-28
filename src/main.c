@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
 /*   Updated: 2023/06/26 13:34:22 by macote           ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char    *ft_getenv(t_minishell *mini, const char *varname)
+char	*ft_getenv(t_minishell *mini, const char *varname)
 {
 	t_list	*lst;
 	size_t	varlen;
@@ -58,18 +58,6 @@ t_list	*ft_getenv_node(t_minishell *mini, const char *varname)
 	return (NULL);
 }
 
-t_minishell	*init_minishell(void)
-{
-	t_minishell	*mini;
-
-	mini = malloc(sizeof(t_minishell));
-	if (!mini)
-		exit(1);
-	mini->env = NULL;
-	ft_memset(mini->cwd, 0, PATH_MAX);
-	return (mini);
-}
-
 void	inherit_envp(t_minishell *mini, char **envp)
 {
 	int	i;
@@ -79,13 +67,22 @@ void	inherit_envp(t_minishell *mini, char **envp)
 		ft_lstadd_back(&mini->env, ft_lstnew(ft_strdup(envp[i++])));
 }
 
-int up_arr(int count, int key)
+t_minishell	*init_minishell(char **envp)
 {
-	(void)count;
-	(void)key;
-	printf("up arrow pressed\n");
-	rl_on_new_line();
-	return (0);
+	t_minishell	*mini;
+	char		*cwd;
+
+	mini = malloc(sizeof(t_minishell));
+	if (!mini)
+		exit(1);
+	mini->env = NULL;
+	ft_memset(mini->cwd, 0, PATH_MAX);
+	inherit_envp(mini, envp);
+	cwd = ft_getenv(mini, "PWD");
+	if (cwd)
+		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
+	getcwd(mini->cwd, PATH_MAX);
+	return (mini);
 }
 
 void minishell(t_minishell *mini)
@@ -94,15 +91,15 @@ void minishell(t_minishell *mini)
 	char *input;
 	while (TRUE)
 	{
-		
 		input = readline("minishell $ ");
 		if (!input)
 			exit(0);
-		add_history(input);
+		if (input && *input)
+			add_history(input);
 		// input = ft_calloc(sizeof(char), 100);
 		// ft_strlcpy(input, " <> >", 55);
 		// ft_strlcpy(input, "", 55);
-	
+
 		tokens = parse_input(input, mini);
 		t_commands *cmds = fill_cmd(tokens);
 		
@@ -115,14 +112,10 @@ void minishell(t_minishell *mini)
 int main(int argc, char **argv, char **envp)
 {
 	t_minishell		*mini;
-	char			*cwd;
 
 	(void)argc;
 	(void)argv;
-
-
-	
-	mini = init_minishell();
+	mini = init_minishell(envp);
 	inherit_envp(mini, envp);
 	cwd = ft_getenv(mini, "PWD");
 	if (cwd)

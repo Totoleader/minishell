@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
 /*   Updated: 2023/06/22 12:38:28 by macote           ###   ########.fr       */
@@ -75,10 +75,11 @@ typedef struct s_commands
 	int	type_out;
 	char **args;
 	char *infile;
-	int	infile_fd;
+	int		infile_fd;
 	char *outfile;
-	int	outfile_fd;
-	struct s_commands *next;
+	int		outfile_fd;
+	struct s_commands	*next;
+	struct s_command	*prev;
 }				t_commands;
 
 typedef struct s_count
@@ -94,8 +95,8 @@ void	exec_cmd_master(t_commands *cmds, t_minishell *mini);
 void	echo_(char **args);
 void	exit_(void);
 void	env_(t_minishell *mini);
-void	export_(t_minishell *mini, t_input command);
-void	unset_(t_minishell *mini, t_input command);
+void	export_(t_minishell *mini, t_commands *command);
+void	unset_(t_minishell *mini, t_commands *command);
 void	pwd_(t_minishell *mini);
 void	cd_(t_commands *cmds, t_minishell *mini);
 

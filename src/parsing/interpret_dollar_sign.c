@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   interpret_dollar_sign.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
 /*   Updated: 2023/06/26 12:17:47 by macote           ###   ########.fr       */

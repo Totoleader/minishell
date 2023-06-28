@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:21:06 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/19 10:28:11 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:45:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	env_delete(t_minishell *mini, int index)
 }
 
 // TODO peut etre afficher message d'erreur si identifier est pas valide
-void	unset_(t_minishell *mini, t_input command)
+void	unset_(t_minishell *mini, t_commands *command)
 {
 	t_list	*lst;
 	int		size;
@@ -54,9 +54,9 @@ void	unset_(t_minishell *mini, t_input command)
 	lst = mini->env;
 	size = ft_lstsize(lst);
 	i = -1;
-	if (command.args[0] == NULL)
+	if (command->args[1] == NULL)
 		return ;
-	to_find = ft_strjoin(command.args[0], "=");
+	to_find = ft_strjoin(command->args[1], "=");
 	while (lst && ++i < size)
 	{
 		if (!ft_strncmp(lst->content, to_find, ft_strlen(to_find)))
