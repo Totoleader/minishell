@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/26 13:34:22 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:16:23 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,6 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	mini = init_minishell(envp);
 	inherit_envp(mini, envp);
-	cwd = ft_getenv(mini, "PWD");
-	if (cwd)
-		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	getcwd(mini->cwd, PATH_MAX);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
 	return (0);
