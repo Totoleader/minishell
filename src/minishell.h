@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/21 13:25:47 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/27 12:42:46 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ typedef struct s_commands
 	int	type_out;
 	char **args;
 	char *infile;
+	int		infile_fd;
 	char *outfile;
-	struct s_commands *next;
+	int		outfile_fd;
+	struct s_commands	*next;
+	struct s_command	*prev;
 }				t_commands;
 
 typedef struct s_count
@@ -85,11 +88,11 @@ typedef struct s_count
 
 //commands
 void 	execute_command(t_commands *cmds, t_minishell *mini);
-void	echo_(t_input command);
+void	echo_(t_commands *command);
 void	exit_(void);
 void	env_(t_minishell *mini);
-void	export_(t_minishell *mini, t_input command);
-void	unset_(t_minishell *mini, t_input command);
+void	export_(t_minishell *mini, t_commands *command);
+void	unset_(t_minishell *mini, t_commands *command);
 void	pwd_(t_minishell *mini);
 void	cd_(t_commands *cmds, t_minishell *mini);
 
