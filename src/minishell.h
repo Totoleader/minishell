@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 11:24:26 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 13:58:45 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -45,6 +49,8 @@
 #define NO_QUOTE 0
 #define SINGLE_QUOTE 1
 #define DOUBLE_QUOTE 2
+
+extern int error_code;
 
 // typedef struct s_minishell_input
 // {

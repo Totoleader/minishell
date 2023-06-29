@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 12:49:46 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:44:51 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,41 @@
 
 void cmd_not_found(char *str)
 {
+	int pid;
+	
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putstr_fd(": Command not found.\n", STDERR_FILENO);
 
 	// free
-	// exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
+	pid = fork();
+	if (pid == 0)
+		exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
+}
+
+int check_access_builtin(t_commands *cmds)
+{
+	int pid;
+	
+	if (cmds->infile && access(cmds->infile, R_OK) == -1)
+	{
+		pid = fork();
+		if (pid == 0)
+			exit(EXIT_FAILURE);	
+		return (FALSE);
+	}
+	else if (cmds->outfile && access(cmds->infile, W_OK) == -1)
+	{
+		pid = fork();
+		if (pid == 0)
+			exit(EXIT_FAILURE);	
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 int	execute_builtin(t_commands *cmds, t_minishell *mini)
 {
-	if (!cmds->args)
+	if (!cmds->args || !check_access_builtin(cmds))
 		return (TRUE);
 	else if (!ft_strncmp(cmds->args[0], "exit", 5))
 		return(exit_(), TRUE);
@@ -161,6 +186,15 @@ int	execute_builtin(t_commands *cmds, t_minishell *mini)
 	return (FALSE);
 }
 
+//helper to execve_command()
+void check_access(t_commands *cmds)
+{
+	if (cmds->infile && access(cmds->infile, R_OK) == -1)
+		exit(EXIT_FAILURE);
+	if (cmds->outfile && access(cmds->infile, W_OK) == -1)
+		exit (EXIT_FAILURE);
+}
+
 void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 {
 	// char *argv[] = { "/usr/bin/sort", NULL};
@@ -175,12 +209,12 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipe_fd[0]);		
+		close(pipe_fd[0]);
+		check_access(cmds);
 		// printf("minishell: %s: command not found\n", cmds->args[0]);
 		execve(cmds->args[0], cmds->args, NULL);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(0, NULL, 0);
 	return (NULL);
 }
 
@@ -198,7 +232,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	current = cmds;
 	is_not_first = 0;
 	//rediriger
-
+	
 	//executer la commande / fork juste quand c'est pas un builtin
 
 	while (current)
@@ -215,6 +249,10 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 
 		reset_std_in_out(stdin_backup, stdout_backup);
 		is_not_first++;
+		waitpid(0, &error_code, 0);
+		error_code = WEXITSTATUS(error_code);
 		current = current->next;
 	}
+	// wait(&error_code);
+	// printf("\n%d\n", error_code);
 }

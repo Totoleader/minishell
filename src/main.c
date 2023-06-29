@@ -6,11 +6,13 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 11:16:23 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 13:19:14 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int error_code;
 
 char	*ft_getenv(t_minishell *mini, const char *varname)
 {
@@ -104,6 +106,7 @@ void minishell(t_minishell *mini)
 		t_commands *cmds = fill_cmd(tokens);
 		
 		exec_cmd_master(cmds, mini);
+		
 		// free command structs and tokens
 	}
 }

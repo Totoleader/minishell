@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/22 10:48:08 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:16:34 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void assign_type(t_token *token)
 		token->type = REDIR_OUT_APPEND;
 	else if (!ft_strncmp(token->arg, "|", 2))
 		token->type = PIPE;
-	else if (!ft_strncmp(token->arg, "$?", 3))
-		token->type = LAST_COMMAND;
+	// else if (!ft_strncmp(token->arg, "$?", 3))
+	// 	token->type = LAST_COMMAND;
 	else
 		token->type = TEXT;
 }

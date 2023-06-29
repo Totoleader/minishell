@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret_dollar_sign.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/06/26 12:17:47 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:25:05 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,10 @@ void interpret_dollar_signs(t_token *token, t_minishell *mini)
 	current = vars;
 	while (current)
 	{
-		args = ft_getenv(mini, current->content);
+		if (!ft_strncmp(current->content, "?", 2))
+			args = ft_itoa(error_code);
+		else
+			args = ft_getenv(mini, current->content);
 		free(current->content);
 		current->content = args;
 		current = current->next;
