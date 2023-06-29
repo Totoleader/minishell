@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 12:21:46 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/29 12:55:06 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void reset_std_in_out(int stdin_backup, int stdout_backup)
 	dup2(stdout_backup, STDOUT_FILENO);
 }
 
-void redir(t_commands *cmd, int is_not_first, int *pipe_fd)
+void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe)
 {
 	if (cmd->infile) //there is infile
 	{
@@ -63,15 +63,15 @@ void redir(t_commands *cmd, int is_not_first, int *pipe_fd)
 	}
 	else if (is_not_first)
 	{
-		dup2_(pipe_fd[READ], STDIN_FILENO);
+		dup2_(last_pipe, STDIN_FILENO);
 	}
-	if (cmd->outfile)
+	if (cmd->next)
+	{
+		dup2_(pipe_fd[WRITE], STDOUT_FILENO);
+	}
+	else if (cmd->outfile)
 	{
 		cmd->outfile_fd = open_(cmd, OUT);
 		dup2_(cmd->outfile_fd, STDOUT_FILENO);
-	}
-	else if (cmd->next)
-	{
-		dup2(pipe_fd[WRITE], STDOUT_FILENO);
 	}
 }

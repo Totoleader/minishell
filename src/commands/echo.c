@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
-/*   Updated: 2023/06/22 15:45:18 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 11:12:03 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	echo_(char **args)
 	}
 	while (args[i])
 	{	
-		if (i)
+		if (i && ft_strncmp(args[0], "-n", 3))
 			printf(" ");
 		printf("%s", args[i]);
 		i++;
