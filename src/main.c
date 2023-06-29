@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 11:16:23 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 12:38:13 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ char	*ft_getenv(t_minishell *mini, const char *varname)
 	}
 	free(fullname);
 	return (NULL);
+}
+
+void	ft_setenv(t_minishell *mini, const char *varname, const char *val)
+{
+	t_list	*varnode;
+	int		add;
+	char	*temp;
+	char	*fullvar;
+
+	add = 1;
+	varnode = ft_getenv_node(mini, varname);
+	if (varnode)
+	{
+		add = 0;
+		free(varnode->content);
+	}
+	temp = ft_strjoin(varname, "=");
+	fullvar = ft_strjoin(temp, val);
+	free(temp);
+	if (add)
+		ft_lstadd_back(&mini->env, ft_lstnew(fullvar));
+	else
+		varnode->content = fullvar;
 }
 
 t_list	*ft_getenv_node(t_minishell *mini, const char *varname)
@@ -132,7 +155,7 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	
+
 	// Term stuff
 	tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~ECHOCTL;	// Turns off all echo ctrl characters (like ^C and ^\)
@@ -144,9 +167,8 @@ int main(int argc, char **argv, char **envp)
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-	
+
 	mini = init_minishell(envp);
-	inherit_envp(mini, envp);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
 	rl_clear_history();

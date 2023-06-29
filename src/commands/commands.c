@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
 /*   Updated: 2023/06/29 12:49:46 by macote           ###   ########.fr       */
@@ -145,19 +145,19 @@ int	execute_builtin(t_commands *cmds, t_minishell *mini)
 	if (!cmds->args)
 		return (TRUE);
 	else if (!ft_strncmp(cmds->args[0], "exit", 5))
-		return(exit_(), TRUE);
+		return (exit_(), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "echo", 5))
-		return(echo_(&cmds->args[1]), TRUE);
+		return (echo_(&cmds->args[1]), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "env", 3))
-		return(env_(mini), TRUE);
+		return (env_(mini), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "export", 6))
-		return(export_(mini, cmds), TRUE);
+		return (export_(mini, cmds), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "unset", 5))
-		return(unset_(mini, cmds), TRUE);
+		return (unset_(mini, cmds), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "pwd", 3))
-		return(pwd_(mini), TRUE);
+		return (pwd_(mini), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "cd", 2))
-		return(cd_(cmds, mini), TRUE);
+		return (cd_(cmds, mini), TRUE);
 	return (FALSE);
 }
 

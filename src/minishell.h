@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
 /*   Updated: 2023/06/29 11:24:26 by macote           ###   ########.fr       */
@@ -114,6 +114,7 @@ void interpret_dollar_signs(t_token *token, t_minishell *mini);
 
 //utils
 char	*ft_getenv(t_minishell *mini, const char *varname);
+void	ft_setenv(t_minishell *mini, const char *varname, const char *val);
 t_list	*ft_getenv_node(t_minishell *mini, const char *varname);
 int	get_path(t_commands *cmd, t_minishell *mini);
 char	*join_path(char *dir, char *cmd_name);
