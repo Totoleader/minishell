@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/28 15:13:08 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 12:49:46 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	execute_builtin(t_commands *cmds, t_minishell *mini)
 	return (FALSE);
 }
 
-void *execve_command(t_commands *cmds, t_minishell *mini)
+void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 {
 	// char *argv[] = { "/usr/bin/sort", NULL};
 	// mini = NULL;
@@ -173,9 +173,11 @@ void *execve_command(t_commands *cmds, t_minishell *mini)
 		return (cmd_not_found(cmds->args[0]), NULL);
 
 	pid = fork();
-	if (pid == 0 && execve(cmds->args[0], cmds->args, NULL) == -1)
+	if (pid == 0)
 	{
+		close(pipe_fd[0]);		
 		// printf("minishell: %s: command not found\n", cmds->args[0]);
+		execve(cmds->args[0], cmds->args, NULL);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(0, NULL, 0);
@@ -189,12 +191,12 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	int stdout_backup;
 	int is_not_first;
 	int pipe_fd[2];
+	int last_pipe;
 
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
 	current = cmds;
 	is_not_first = 0;
-
 	//rediriger
 
 	//executer la commande / fork juste quand c'est pas un builtin
@@ -202,13 +204,17 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	while (current)
 	{
 		// pipe_fd = NULL;
-
 		//si il y a une autre commande apres créer un pipe
 		if (current->next)
 			pipe(pipe_fd);
+		redir(current, is_not_first, pipe_fd, last_pipe);
+		if (!execute_builtin(current, mini))
+			execve_command(current, mini, pipe_fd);
+		if (current->next)
+			last_pipe = pipe_fd[READ];
 
-		redir(current, is_not_first, pipe_fd);
-		if (!execute_builtin(cmds, mini))
-			execve_command(cmds, mini);
+		reset_std_in_out(stdin_backup, stdout_backup);
+		is_not_first++;
+		current = current->next;
 	}
 }
