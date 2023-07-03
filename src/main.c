@@ -6,11 +6,13 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 12:38:13 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:24:40 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	error_code;
 
 char	*ft_getenv(t_minishell *mini, const char *varname)
 {

@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 11:24:26 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:24:49 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 #define NO_QUOTE 0
 #define SINGLE_QUOTE 1
 #define DOUBLE_QUOTE 2
+
+extern int	error_code;
 
 // typedef struct s_minishell_input
 // {

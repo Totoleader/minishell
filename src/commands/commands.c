@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 12:49:46 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:43:19 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,9 @@ void cmd_not_found(char *str)
 	ft_putstr_fd(": Command not found.\n", STDERR_FILENO);
 
 	// free
-	// exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
+	int pid = fork();
+	if (pid == 0)
+		exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
 }
 
 int	execute_builtin(t_commands *cmds, t_minishell *mini)
@@ -180,7 +182,8 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 		execve(cmds->args[0], cmds->args, NULL);
 		exit(EXIT_FAILURE);
 	}
-	waitpid(0, NULL, 0);
+	waitpid(-1, &error_code, 0);
+	error_code = WEXITSTATUS(error_code);
 	return (NULL);
 }
 
@@ -217,4 +220,11 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 		is_not_first++;
 		current = current->next;
 	}
+	
+	// while (waitpid(-1, &wstatus, 0) > 0)
+	// {
+	// 	if (WIFEXITED(wstatus))
+	// 		printf("Exited with: %d\n", WEXITSTATUS(wstatus));
+	// }
+	//printf("%d\n", return_code);
 }
