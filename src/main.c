@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:24:40 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:55:32 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void minishell(t_minishell *mini)
 		t_commands *cmds = fill_cmd(tokens);
 		
 		exec_cmd_master(cmds, mini);
+		
 		// free command structs and tokens
 	}
 }

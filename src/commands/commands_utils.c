@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 12:55:06 by macote           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:49:13 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	dup2_(int fd, int std)
 {
 	if (dup2(fd, std) == -1)
 	{
-		ft_putstr_fd("dup2() failed", STDERR_FILENO);  // pas le droit a perror
+		ft_putstr_fd("dup2() failed\n", STDERR_FILENO);  // pas le droit a perror
 		// free
-		exit(EXIT_FAILURE);
+		// exit(EXIT_FAILURE);
 	}
 	close(fd);
 }
@@ -43,7 +43,7 @@ int	open_(t_commands *cmd, int in_out)
 	{
 		ft_putstr_fd("open() failed", STDERR_FILENO);
 		// free_commands(pip);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
 	}
 	return (fd);
 }

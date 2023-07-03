@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:24:49 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:58:45 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
 
