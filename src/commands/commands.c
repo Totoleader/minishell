@@ -141,7 +141,7 @@ void cmd_not_found(char *str)
 	// free
 	pid = fork();
 	if (pid == 0)
-		exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
+		exit(127);// a verifier <--------------------------------------------------------
 }
 
 int check_access_builtin(t_commands *cmds)
@@ -215,6 +215,9 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 		execve(cmds->args[0], cmds->args, NULL);
 		exit(EXIT_FAILURE);
 	}
+
+	waitpid(-1, &error_code, 0);
+	error_code = WEXITSTATUS(error_code);
 	return (NULL);
 }
 
@@ -253,6 +256,4 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 		error_code = WEXITSTATUS(error_code);
 		current = current->next;
 	}
-	// wait(&error_code);
-	// printf("\n%d\n", error_code);
 }

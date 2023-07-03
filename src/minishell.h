@@ -50,7 +50,7 @@
 #define SINGLE_QUOTE 1
 #define DOUBLE_QUOTE 2
 
-extern int error_code;
+extern int	error_code;
 
 // typedef struct s_minishell_input
 // {

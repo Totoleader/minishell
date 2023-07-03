@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:12:36 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/29 12:47:11 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:01:11 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	change_homedir(t_minishell *mini)
 	}
 }
 
-//OLDPWD
 void	cd_(t_commands *cmds, t_minishell *mini)
 {
 	if (!cmds->args[1])
