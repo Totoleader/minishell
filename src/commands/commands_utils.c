@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 15:27:54 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:47:27 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	open_(t_commands *cmd, int in_out)
 	// else if (in_out == IN && cmd->type_in == REDIR_IN_DELIM)
 	// 	fd = open(cmd->infile, O_RDONLY);
 	else if (in_out == OUT && cmd->type_out == REDIR_OUT)
-		fd = open(cmd->outfile, O_WRONLY | O_CREAT, 0644);
+		fd = open(cmd->outfile, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	else if (in_out == OUT && cmd->type_out == REDIR_OUT_APPEND)
-		fd = open(cmd->outfile, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		fd = open(cmd->outfile, O_WRONLY | O_APPEND | O_CREAT, 0777);
 
 	if (fd == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:16:34 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/03 12:50:43 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ t_token	*parse_input(char *input, t_minishell *mini)
 		current = current->next;
 	}
 	tokens[i].arg = NULL;
-	if (args)
-		ft_lstclear(&args);
+	ft_lstclear(&args);
 	return (tokens);
 }

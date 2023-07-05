@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/05 15:26:28 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:51:44 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	is_valididentifier(char c)
 void	export_(t_minishell *mini, t_commands *command)
 {
 	int		i;
-
+  error_code = 0;
 	i = 1;
 	if (command->args[i] == NULL)
 		env_(mini);

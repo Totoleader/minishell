@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 11:53:19 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:43:10 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,51 @@ t_minishell	*init_minishell(char **envp)
 	return (mini);
 }
 
+
+void free_cmds(t_commands *cmds)
+{
+	t_commands *current;
+	t_commands *to_free;
+	int i;
+
+	i = 0;
+	current = cmds;
+	while (current)
+	{
+		to_free = current;
+		if (current->args)
+		{
+			while (current->args[i])
+				free(current->args[i++]);
+			free(current->args);
+		}
+		if (current->infile)
+			free(current->infile);
+		if (current->outfile)
+			free(current->outfile);
+		current = current->next;
+		free(to_free);
+	}
+}
+
+void free_mini(t_minishell *mini)
+{
+	ft_lstclear(&mini->env);
+	free(mini);
+}
+
+// void free_all(t_commands *cmds, t_minishell *mini)
+// {
+// 	free_cmds(cmds);
+// 	free(mini);
+// }
+
 void minishell(t_minishell *mini)
 {
 	t_token *tokens;
 	char *input;
+	t_commands *cmds;
+	
 	while (TRUE)
 	{
 		input = readline("minishell $ ");
@@ -126,18 +167,21 @@ void minishell(t_minishell *mini)
 		// ft_strlcpy(input, "", 55);
 
 		tokens = parse_input(input, mini);
-		t_commands *cmds = fill_cmd(tokens);
+		cmds = fill_cmd(tokens);
 		
 		exec_cmd_master(cmds, mini);
 		
 		// free command structs and tokens
+		// free_cmds(cmds);
 	}
+	free_mini(mini);
 }
 
 void	sig_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		error_code = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

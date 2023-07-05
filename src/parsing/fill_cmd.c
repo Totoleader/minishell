@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/22 13:08:07 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/03 12:45:07 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	set_cmd(t_commands **command, t_token *tok, char file)
 {
 	if (!tok->arg || tok->type != TEXT)
 	{
+		error_code = 258;
 		ft_putstr_fd("Parse error\n", 2);
 		return (0);
 	}
@@ -115,6 +116,7 @@ t_commands	*fill_cmd(t_token *tokens)
 		{
 			if (!tokens[i_tok + 1].arg)
 			{
+				error_code = 258;
 				ft_putstr_fd("Parse error\n", 2);
 				return (clean_exit(first));
 			}
@@ -137,18 +139,5 @@ t_commands	*fill_cmd(t_token *tokens)
 		}
 		i_tok++;
 	}
-	// cmds = first;
-	// while (cmds)
-	// {
-	// 	printf("---------------------\n");
-	// 	printf("Command: ");
-	// 	for (int i = 0; cmds->args && cmds->args[i]; i++)
-	// 		printf("%s ", cmds->args[i]);
-	// 	printf("\n");
-	// 	printf("infile: %s\n", cmds->infile);
-	// 	printf("outfile: %s\n", cmds->outfile);
-	// 	cmds = cmds->next;
-	// }
-
 	return (first);
 }
