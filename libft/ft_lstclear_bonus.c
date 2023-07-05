@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 09:51:23 by macote            #+#    #+#             */
-/*   Updated: 2023/06/14 13:31:43 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/03 12:54:54 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_lstclear(t_list **lst)
 	while (current)
 	{
 		next = current->next;
+		free(current);
 		current = next;
 	}
 	*lst = NULL;

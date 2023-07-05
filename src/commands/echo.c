@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 11:12:03 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:26:54 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ void	echo_(char **args)
 	int flag_is_active;
 
 	flag_is_active = FALSE;
+	error_code = 0;
 	i = 0;
+	if (!args[0])
+	{
+		printf("\n");
+		return ;
+	}
 	if (!ft_strncmp(args[0], "-n", 3))
 	{
 		flag_is_active = TRUE;	

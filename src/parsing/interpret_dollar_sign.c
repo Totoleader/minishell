@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:25:05 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:08:40 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void replace_vars(t_token *token, t_list *vars, int count)
 	{
 		if (token->arg[c->i] == '$' && token->arg[c->i + 1] && token->arg[c->i + 1] != '$'
 			&& token->arg[c->i + 1] != '\'' && token->arg[c->i + 1] != '\"' && token->arg[c->i + 1] != ' ')
-			replace_with_var_content(token, new_content, c, current);
+			{
+				replace_with_var_content(token, new_content, c, current);
+				current = current->next;
+			}
 		else
 			new_content[c->j++] = token->arg[c->i++];
 	}
@@ -64,13 +67,13 @@ void count_size_helper(char *args, int *i, int *count)
 			(*i)++;
 		}
 	}
-	if (args[(*i)] == '$' && args[(*i) + 1] && args[(*i) + 1] != ' ' && args[(*i) + 1] != '\'' && args[(*i) + 1] != '\"' && args[(*i) + 1] != '$')
+	else if (args[(*i)] == '$' && args[(*i) + 1] && args[(*i) + 1] != ' ' && args[(*i) + 1] != '\'' && args[(*i) + 1] != '\"' && args[(*i) + 1] != '$')
 	{
 		(*i)++;
 		while (args[(*i)] && args[(*i)] != ' ' && args[(*i)] != '\'' && args[(*i)] != '\"' && args[(*i)] != '$')
 			(*i)++;
 	}
-	if (args[(*i)])
+	else if (args[(*i)])
 	{
 		(*i)++;
 		(*count)++;

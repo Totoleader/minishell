@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:21:06 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/27 12:45:30 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:54:26 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	unset_(t_minishell *mini, t_commands *command)
 	int		i;
 	char	*to_find;
 
+	error_code = 0;
 	lst = mini->env;
 	size = ft_lstsize(lst);
 	i = -1;

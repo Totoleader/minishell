@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 10:42:53 by scloutie          #+#    #+#             */
-/*   Updated: 2023/06/19 10:45:16 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:52:30 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	pwd_(t_minishell *mini)
 {
+	error_code = 0;
 	if (mini->cwd[0])
 		printf("%s\n", mini->cwd);
 }

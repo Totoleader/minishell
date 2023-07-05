@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:44:51 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:00:45 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,32 +144,32 @@ void cmd_not_found(char *str)
 		exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
 }
 
-int check_access_builtin(t_commands *cmds)
-{
-	int pid;
+// int check_access_builtin(t_commands *cmds)
+// {
+// 	int pid;
 	
-	if (cmds->infile && access(cmds->infile, R_OK) == -1)
-	{
-		pid = fork();
-		if (pid == 0)
-			exit(EXIT_FAILURE);	
-		return (FALSE);
-	}
-	else if (cmds->outfile && access(cmds->infile, W_OK) == -1)
-	{
-		pid = fork();
-		if (pid == 0)
-			exit(EXIT_FAILURE);	
-		return (FALSE);
-	}
-	return (TRUE);
-}
+// 	if (cmds->infile && access(cmds->infile, R_OK) == -1)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 			exit(EXIT_FAILURE);	
+// 		return (FALSE);
+// 	}
+// 	else if (cmds->outfile && access(cmds->infile, W_OK) == -1)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 			exit(EXIT_FAILURE);	
+// 		return (FALSE);
+// 	}
+// 	return (TRUE);
+// }
 
 int	execute_builtin(t_commands *cmds, t_minishell *mini)
 {
-	if (!cmds->args || !check_access_builtin(cmds))
+	if (!cmds->args)//////////////////////////////////////////////////////////////////////////////
 		return (TRUE);
-	else if (!ft_strncmp(cmds->args[0], "exit", 5))
+	if (!ft_strncmp(cmds->args[0], "exit", 5))
 		return (exit_(), TRUE);
 	else if (!ft_strncmp(cmds->args[0], "echo", 5))
 		return (echo_(&cmds->args[1]), TRUE);
@@ -195,7 +195,7 @@ void check_access(t_commands *cmds)
 		exit (EXIT_FAILURE);
 }
 
-void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
+void *execve_command(t_commands *cmds, t_minishell *mini)
 {
 	// char *argv[] = { "/usr/bin/sort", NULL};
 	// mini = NULL;
@@ -209,13 +209,24 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(pipe_fd[0]);
-		check_access(cmds);
+		// close(pipe_fd[0]);
+		// check_access(cmds);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// printf("minishell: %s: command not found\n", cmds->args[0]);
 		execve(cmds->args[0], cmds->args, NULL);
 		exit(EXIT_FAILURE);
 	}
+	waitpid(0, &error_code, 0);
+	error_code = WEXITSTATUS(error_code);
 	return (NULL);
+}
+
+void exit_success()
+{
+	int pid;
+	
+	pid = fork();
+	if (pid == 0)
+		exit(EXIT_SUCCESS);
 }
 
 void exec_cmd_master(t_commands *cmds, t_minishell *mini)
@@ -227,31 +238,42 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	int pipe_fd[2];
 	int last_pipe;
 
-	stdin_backup = dup(STDIN_FILENO);
-	stdout_backup = dup(STDOUT_FILENO);
 	current = cmds;
 	is_not_first = 0;
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
 	//rediriger
-	
-	//executer la commande / fork juste quand c'est pas un builtin
 
+	//executer la commande / fork juste quand c'est pas un builtin
 	while (current)
 	{
-		// pipe_fd = NULL;
-		//si il y a une autre commande apres créer un pipe
+		//check acess before and dont exec cmd
+		if (current->infile && access(current->infile, F_OK | R_OK) != 0)
+		{
+			error_code = 1;
+			printf("minishell: %s: Permission denied\n", current->infile);
+			current = current->next;
+			continue ;
+		}
+		else if (current->outfile && access(current->outfile, F_OK) == 0 && access(current->outfile, W_OK) != 0)
+		{
+			error_code = 1;
+			printf("minishell: %s: Permission denied\n", current->outfile);
+			current = current->next;
+			continue ;
+		}
+
 		if (current->next)
 			pipe(pipe_fd);
 		redir(current, is_not_first, pipe_fd, last_pipe);
 		if (!execute_builtin(current, mini))
-			execve_command(current, mini, pipe_fd);
+			execve_command(current,mini);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 
-		reset_std_in_out(stdin_backup, stdout_backup);
 		is_not_first++;
-		waitpid(0, &error_code, 0);
-		error_code = WEXITSTATUS(error_code);
 		current = current->next;
+		reset_std_in_out(stdin_backup, stdout_backup);
 	}
 	// wait(&error_code);
 	// printf("\n%d\n", error_code);
