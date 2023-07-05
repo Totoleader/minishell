@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/06/29 15:44:51 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:29:18 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,31 @@ void check_access(t_commands *cmds)
 		exit (EXIT_FAILURE);
 }
 
+char	**convert_env(t_minishell *mini)
+{
+	t_list	*current;
+	char	**envtab;
+	int		i;
+
+	current = mini->env;
+	i = 0;
+	while (current != NULL)
+	{
+		current = current->next;
+		i++;
+	}
+	envtab = malloc(sizeof(char *) * (i + 1));
+	current = mini->env;
+	i = -1;
+	while (current != NULL)
+	{
+		envtab[++i] = ft_strdup(current->content);
+		current = current->next;
+	}
+	envtab[++i] = NULL;
+	return (envtab);
+}
+
 void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 {
 	// char *argv[] = { "/usr/bin/sort", NULL};
@@ -212,7 +237,7 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 		close(pipe_fd[0]);
 		check_access(cmds);
 		// printf("minishell: %s: command not found\n", cmds->args[0]);
-		execve(cmds->args[0], cmds->args, NULL);
+		execve(cmds->args[0], cmds->args, convert_env(mini));
 		exit(EXIT_FAILURE);
 	}
 
@@ -249,6 +274,8 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			execve_command(current, mini, pipe_fd);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
+		if (current->type_in == REDIR_IN_DELIM)
+			unlink("temp");
 
 		reset_std_in_out(stdin_backup, stdout_backup);
 		is_not_first++;
