@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:21:51 by macote            #+#    #+#             */
 /*   Updated: 2023/07/05 15:26:54 by macote           ###   ########.fr       */
@@ -15,7 +15,7 @@
 void	echo_(char **args)
 {
 	int	i;
-	int flag_is_active;
+	int	flag_is_active;
 
 	flag_is_active = FALSE;
 	error_code = 0;
@@ -27,11 +27,11 @@ void	echo_(char **args)
 	}
 	if (!ft_strncmp(args[0], "-n", 3))
 	{
-		flag_is_active = TRUE;	
-		i++;	
+		flag_is_active = TRUE;
+		i++;
 	}
 	while (args[i])
-	{	
+	{
 		if (i && ft_strncmp(args[0], "-n", 3))
 			printf(" ");
 		printf("%s", args[i]);

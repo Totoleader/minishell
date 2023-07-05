@@ -195,6 +195,31 @@ void check_access(t_commands *cmds)
 		exit (EXIT_FAILURE);
 }
 
+char	**convert_env(t_minishell *mini)
+{
+	t_list	*current;
+	char	**envtab;
+	int		i;
+
+	current = mini->env;
+	i = 0;
+	while (current != NULL)
+	{
+		current = current->next;
+		i++;
+	}
+	envtab = malloc(sizeof(char *) * (i + 1));
+	current = mini->env;
+	i = -1;
+	while (current != NULL)
+	{
+		envtab[++i] = ft_strdup(current->content);
+		current = current->next;
+	}
+	envtab[++i] = NULL;
+	return (envtab);
+}
+
 void *execve_command(t_commands *cmds, t_minishell *mini)
 {
 	// char *argv[] = { "/usr/bin/sort", NULL};
@@ -212,7 +237,7 @@ void *execve_command(t_commands *cmds, t_minishell *mini)
 		// close(pipe_fd[0]);
 		// check_access(cmds);////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// printf("minishell: %s: command not found\n", cmds->args[0]);
-		execve(cmds->args[0], cmds->args, NULL);
+		execve(cmds->args[0], cmds->args, convert_env(mini));
 		exit(EXIT_FAILURE);
 	}
 	waitpid(0, &error_code, 0);
@@ -270,6 +295,8 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			execve_command(current,mini);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
+		if (current->type_in == REDIR_IN_DELIM)
+			unlink("temp");
 
 		is_not_first++;
 		current = current->next;
