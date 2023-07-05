@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 15:00:45 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:37:59 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void cmd_not_found(char *str)
 	// free
 	pid = fork();
 	if (pid == 0)
-		exit(127);// a verifier <--------------------------------------------------------<<<<<<<<<
+		exit(127);// a verifier <--------------------------------------------------------
 }
 
 // int check_access_builtin(t_commands *cmds)
@@ -275,6 +275,4 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 		current = current->next;
 		reset_std_in_out(stdin_backup, stdout_backup);
 	}
-	// wait(&error_code);
-	// printf("\n%d\n", error_code);
 }

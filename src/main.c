@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int error_code;
+int	error_code;
 
 char	*ft_getenv(t_minishell *mini, const char *varname)
 {

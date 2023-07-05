@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:12:36 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 11:49:28 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:38:33 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	change_homedir(t_minishell *mini)
 	}
 }
 
-//OLDPWD
 void	cd_(t_commands *cmds, t_minishell *mini)
 {
 	if (!cmds->args[1])
