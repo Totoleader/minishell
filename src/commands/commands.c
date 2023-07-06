@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 15:37:59 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 13:55:23 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	while (current)
 	{
 		//check acess before and dont exec cmd
-		if (current->infile && access(current->infile, F_OK | R_OK) != 0)
+		if (cmds->type_in != REDIR_IN_DELIM && current->infile && access(current->infile, F_OK | R_OK) != 0)
 		{
 			error_code = 1;
 			printf("minishell: %s: Permission denied\n", current->infile);
@@ -292,7 +292,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			pipe(pipe_fd);
 		redir(current, is_not_first, pipe_fd, last_pipe);
 		if (!execute_builtin(current, mini))
-			execve_command(current,mini);
+			execve_command(current, mini);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 		if (current->type_in == REDIR_IN_DELIM)

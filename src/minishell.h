@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 11:52:47 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:07:08 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char	**split_env(t_minishell *mini);
 void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
 void	dup2_(int fd, int std);
 void reset_std_in_out(int stdin_backup, int stdout_backup);
-
+void	printf_err(char *format, char *var);
+int	is_valididentifier(char *arg);
 
 #endif

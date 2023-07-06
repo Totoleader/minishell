@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 16:13:25 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:47:31 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ void	here_doc(t_commands *cmd)
 
 void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe)
 {
-	// if (cmd->type_in == REDIR_IN_DELIM)
-	// {
-	// 	here_doc(cmd);
-	// 	free(cmd->infile);
-	// 	cmd->infile = ft_strdup("temp");
-	// 	cmd->infile_fd = open_(cmd, IN);
-	// 	dup2_(cmd->infile_fd, STDIN_FILENO);
-	// }
-	if (cmd->infile) //there is infile
+	if (cmd->type_in == REDIR_IN_DELIM)
+	{
+		here_doc(cmd);
+		free(cmd->infile);
+		cmd->infile = ft_strdup("temp");
+		cmd->infile_fd = open_(cmd, IN);
+		dup2_(cmd->infile_fd, STDIN_FILENO);
+	}
+	else if (cmd->infile) //there is infile
 	{
 		cmd->infile_fd = open_(cmd, IN);
 		dup2_(cmd->infile_fd, STDIN_FILENO);

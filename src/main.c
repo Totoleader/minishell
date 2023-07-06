@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 12:43:10 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 13:48:59 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,17 +162,11 @@ void minishell(t_minishell *mini)
 			exit(0);
 		if (input && *input)
 			add_history(input);
-		// input = ft_calloc(sizeof(char), 100);
-		// ft_strlcpy(input, " <> >", 55);
-		// ft_strlcpy(input, "", 55);
 
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
-		
+
 		exec_cmd_master(cmds, mini);
-		
-		// free command structs and tokens
-		// free_cmds(cmds);
 	}
 	free_mini(mini);
 }
