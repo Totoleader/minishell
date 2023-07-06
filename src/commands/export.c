@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 11:51:44 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 13:36:56 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,34 @@ static void	add_var(t_minishell *mini, char *arg)
 	}
 }
 
-static int	is_valididentifier(char c)
+static int	is_valididentifier(char *arg)
 {
-	return (c == '_' || ft_isalpha(c));
+	int		is_valid_first;
+	int		is_valid_string;
+	int		i;
+
+	if (!arg)
+		return (0);
+	is_valid_first = (arg[0] == '_' || ft_isalpha(arg[0]));
+	if (!is_valid_first)
+		return (0);
+	is_valid_string = 1;
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] != '_' && !ft_isalnum(arg[i]))
+			is_valid_string = 0;
+		i++;
+	}
+	return (is_valid_string && is_valid_first);
 }
 
 void	export_(t_minishell *mini, t_commands *command)
 {
 	int		i;
-  error_code = 0;
+	char	*varname;
+
+	error_code = 0;
 	i = 1;
 	if (command->args[i] == NULL)
 		env_(mini);
@@ -78,10 +97,17 @@ void	export_(t_minishell *mini, t_commands *command)
 	{
 		while (command->args[i] != NULL)
 		{
-			if (!is_valididentifier(command->args[i][0]))
+			varname = get_varname(command->args[i]);
+			if (!varname)
+			{
+				i++;
+				continue ;
+			}
+			if (!is_valididentifier(varname))
 				ft_putstr_fd("minishell: export: Invalid identifier\n", 2);
 			else
 				add_var(mini, command->args[i]);
+			free(varname);
 			i++;
 		}
 	}
