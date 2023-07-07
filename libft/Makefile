@@ -6,7 +6,7 @@
 #    By: macote <macote@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 10:59:14 by macote            #+#    #+#              #
-#    Updated: 2023/06/14 10:15:01 by macote           ###   ########.fr        #
+#    Updated: 2023/07/06 12:17:01 by macote           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SOURCE = ft_isalpha.c\
          ft_putstr_fd.c \
          ft_putendl_fd.c \
          ft_putnbr_fd.c \
+         ft_lstclear_content.c \
 
 BONUS_ = ft_lstnew_bonus.c \
          ft_lstadd_front_bonus.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/05 12:43:10 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:05:26 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,45 +110,6 @@ t_minishell	*init_minishell(char **envp)
 	return (mini);
 }
 
-
-void free_cmds(t_commands *cmds)
-{
-	t_commands *current;
-	t_commands *to_free;
-	int i;
-
-	i = 0;
-	current = cmds;
-	while (current)
-	{
-		to_free = current;
-		if (current->args)
-		{
-			while (current->args[i])
-				free(current->args[i++]);
-			free(current->args);
-		}
-		if (current->infile)
-			free(current->infile);
-		if (current->outfile)
-			free(current->outfile);
-		current = current->next;
-		free(to_free);
-	}
-}
-
-void free_mini(t_minishell *mini)
-{
-	ft_lstclear(&mini->env);
-	free(mini);
-}
-
-// void free_all(t_commands *cmds, t_minishell *mini)
-// {
-// 	free_cmds(cmds);
-// 	free(mini);
-// }
-
 void minishell(t_minishell *mini)
 {
 	t_token *tokens;
@@ -157,14 +118,15 @@ void minishell(t_minishell *mini)
 	
 	while (TRUE)
 	{
+		cmds = NULL;
 		input = readline("minishell $ ");
 		if (!input)
+		{
+			free_all(cmds, mini);
 			exit(0);
+		}
 		if (input && *input)
 			add_history(input);
-		// input = ft_calloc(sizeof(char), 100);
-		// ft_strlcpy(input, " <> >", 55);
-		// ft_strlcpy(input, "", 55);
 
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
@@ -172,7 +134,7 @@ void minishell(t_minishell *mini)
 		exec_cmd_master(cmds, mini);
 		
 		// free command structs and tokens
-		// free_cmds(cmds);
+		free_cmds(cmds);
 	}
 	free_mini(mini);
 }
@@ -218,6 +180,6 @@ int main(int argc, char **argv, char **envp)
 	mini = init_minishell(envp);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
 	minishell(mini);
-	rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }
