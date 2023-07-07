@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/06 13:05:36 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:03:05 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_commands	*fill_cmd(t_token *tokens)
 			i_tok++;
 			continue ;
 		}
-		else if (tokens[i_tok].type == TEXT)
+		else if (tokens[i_tok].type == TEXT)				// ls -l > grep 2 > outfile => interprete "2" comme un autre argument de ls. il faut compter les tokens TEXT qui ne sont pas apres une redirection jusqu'a ce quon rencontre un pipe pour trouve le bon nombre d'argument
 			i_tok += (fill_args(&cmds, &tokens[i_tok]) - 1);
 		else if ((tokens[i_tok].type == REDIR_IN || tokens[i_tok].type == REDIR_IN_DELIM))
 		{
