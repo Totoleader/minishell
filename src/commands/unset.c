@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:21:06 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 11:54:26 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 14:06:51 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
+
 /**
  * Finds the env variable at specified index and deletes it
  * If it is the first in the list, adjusts the first pointer
  **/
-static void	env_delete(t_minishell *mini, int index)
+static void	env_delete(t_minishell *mini, char *var)
 {
-	int		i;
 	t_list	*temp;
 	t_list	*lst;
 
-	i = 0;
 	lst = mini->env;
-	if (index == 0)
+	temp = lst;
+	if (!ft_strncmp(mini->env->content, var, ft_strlen(var)))
 	{
 		temp = mini->env->next;
 		ft_lstdelone(mini->env, free);
@@ -32,14 +33,17 @@ static void	env_delete(t_minishell *mini, int index)
 	}
 	else
 	{
-		while (i != index)
+		while (lst != NULL)
 		{
+			if (!ft_strncmp(lst->content, var, ft_strlen(var)))
+			{
+				temp->next = lst->next;
+				ft_lstdelone(lst, free);
+				break ;
+			}
 			temp = lst;
 			lst = lst->next;
-			i++;
 		}
-		temp->next = lst->next;
-		ft_lstdelone(lst, free);
 	}
 }
 
@@ -47,26 +51,26 @@ static void	env_delete(t_minishell *mini, int index)
 void	unset_(t_minishell *mini, t_commands *command)
 {
 	t_list	*lst;
-	int		size;
 	int		i;
 	char	*to_find;
 
 	error_code = 0;
 	lst = mini->env;
-	size = ft_lstsize(lst);
-	i = -1;
-	if (command->args[1] == NULL)
-		return ;
-	to_find = ft_strjoin(command->args[1], "=");
-	while (lst && ++i < size)
+	i = 1;
+	while (command->args[i] != NULL)
 	{
-		if (!ft_strncmp(lst->content, to_find, ft_strlen(to_find)))
-			break ;
-		lst = lst->next;
+		to_find = ft_strjoin(command->args[i], "=");
+		if (!to_find)
+		{
+			i++;
+			continue ;
+		}
+		else if (is_valididentifier(command->args[i]))
+			env_delete(mini, to_find);
+		else
+			printf_err("minishell: unset: \'$\': Invalid identifier\n",
+				command->args[i]);
+		free(to_find);
+		i++;
 	}
-	free(to_find);
-	if (!lst)
-		return ;
-	else
-		env_delete(mini, i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 11:51:44 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/06 14:33:42 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static char	*get_varname(char *arg)
 	char	*out;
 	int		i;
 
-	i = -1;
-	while (arg[++i] != '=')
-		;
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+		i++;
 	out = malloc(sizeof(char) * (i + 1));
 	if (!out)
 		return (NULL);
 	i = 0;
-	while (arg[i] != '=')
+	while (arg[i] && arg[i] != '=')
 	{
 		out[i] = arg[i];
 		i++;
@@ -62,27 +62,28 @@ static void	add_var(t_minishell *mini, char *arg)
 	}
 }
 
-static int	is_valididentifier(char c)
-{
-	return (c == '_' || ft_isalpha(c));
-}
-
 void	export_(t_minishell *mini, t_commands *command)
 {
 	int		i;
-  error_code = 0;
-	i = 1;
+	char	*varname;
+
+	error_code = 0;
+	i = 0;
 	if (command->args[i] == NULL)
 		env_(mini);
 	else
 	{
-		while (command->args[i] != NULL)
+		while (command->args[++i] != NULL)
 		{
-			if (!is_valididentifier(command->args[i][0]))
-				ft_putstr_fd("minishell: export: Invalid identifier\n", 2);
+			varname = get_varname(command->args[i]);
+			if (!varname)
+				continue ;
+			if (!is_valididentifier(varname))
+				printf_err("minishell: export: \'$\': Invalid identifier\n",
+					varname);
 			else
 				add_var(mini, command->args[i]);
-			i++;
+			free(varname);
 		}
 	}
 }

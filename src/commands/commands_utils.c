@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
 /*   Updated: 2023/07/07 13:04:09 by macote           ###   ########.fr       */
@@ -42,36 +42,7 @@ void reset_std_in_out(int *std_backup)
 	dup2(std_backup[OUT], STDOUT_FILENO);
 }
 
-void	here_doc(t_commands *cmd)
-{
-	char	*hd_buf;
-	int		first;
-	int		fd;
-
-	first = 1;
-	printf("Welcome to heredoc! Delimiter is %s\n", cmd->infile);
-	fd = open("temp", O_WRONLY | O_APPEND | O_CREAT, 0777);
-	while (first || hd_buf)
-	{
-		first = 0;
-		hd_buf = readline("> ");
-		if (!hd_buf || ft_strncmp(hd_buf, cmd->infile, ft_strlen(hd_buf)) == 0)
-		{
-			free(hd_buf);
-			close(fd);
-			return ;
-		}
-		else
-		{
-			write(fd, hd_buf, ft_strlen(hd_buf));
-			write(fd, "\n", 1);
-		}
-		free(hd_buf);
-	}
-	close(fd);
-}
-
-void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe)
+void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe)
 {
 	if (cmd->type_in == REDIR_IN_DELIM)
 	{

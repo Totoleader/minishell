@@ -130,10 +130,9 @@ void minishell(t_minishell *mini)
 
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
-		
+
 		exec_cmd_master(cmds, mini);
-		
-		// free command structs and tokens
+    
 		free_cmds(cmds);
 	}
 	free_mini(mini);

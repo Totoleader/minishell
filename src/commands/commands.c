@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
 /*   Updated: 2023/07/07 13:02:38 by macote           ###   ########.fr       */
@@ -142,7 +142,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			continue ;
 		if (current->next)
 			pipe(pipe_fd);
-		redir(current, is_not_first, pipe_fd, last_pipe);
+		redir(mini, current, is_not_first, pipe_fd, last_pipe);
 		if (!execute_builtin(current, mini))
 			execve_command(current, mini, std_backup);
 		if (current->next)
