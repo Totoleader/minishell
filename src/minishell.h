@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 16:01:07 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/07 13:21:54 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	ft_free_tab(char **tabl);
 char	**split_env(t_minishell *mini);
 void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
 void	dup2_(int fd, int std);
-void reset_std_in_out(int stdin_backup, int stdout_backup);
+void reset_std_in_out(int *std_backup);
 void	printf_err(char *format, char *var);
 int	is_valididentifier(char *arg);
 

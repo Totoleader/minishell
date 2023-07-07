@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:04:09 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/07 13:22:46 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, i
 {
 	if (cmd->type_in == REDIR_IN_DELIM)
 	{
-		here_doc(cmd);
+		here_doc(cmd, mini);
 		free(cmd->infile);
 		cmd->infile = ft_strdup("temp");
 		cmd->infile_fd = open_(cmd, IN);
