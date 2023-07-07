@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_lstclear_content.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 09:51:23 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 12:03:50 by macote           ###   ########.fr       */
+/*   Created: 2023/07/06 12:06:47 by macote            #+#    #+#             */
+/*   Updated: 2023/07/06 12:07:29 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst)
+void	ft_lstclear_content(t_list **lst)
 {
 	t_list	*current;
 	t_list	*next;
@@ -23,7 +23,8 @@ void	ft_lstclear(t_list **lst)
 	while (current)
 	{
 		next = current->next;
-		// free(current->content);
+		if (current->content)
+			free(current->content);
 		free(current);
 		current = next;
 	}

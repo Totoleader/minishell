@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 10:57:50 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:01:07 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,19 @@ typedef struct s_count
 	int k;
 }				t_count;
 
+typedef struct s_fds
+{
+	int is_not_first;
+	int std_backup[2];
+	int pipe_fd[2];
+	int last_pipe;
+}				t_fds;
+
 //commands
 void 	execute_command(t_commands *cmds, t_minishell *mini);
 void	exec_cmd_master(t_commands *cmds, t_minishell *mini);
 void	echo_(char **args);
-void	exit_(void);
+void	exit_(t_commands *cmds, t_minishell *mini);
 void	env_(t_minishell *mini);
 void	export_(t_minishell *mini, t_commands *command);
 void	unset_(t_minishell *mini, t_commands *command);
@@ -132,5 +140,10 @@ void	dup2_(int fd, int std);
 void reset_std_in_out(int stdin_backup, int stdout_backup);
 void	printf_err(char *format, char *var);
 int	is_valididentifier(char *arg);
+
+//free
+void free_cmds(t_commands *cmds);
+void free_mini(t_minishell *mini);
+void free_all(t_commands *cmds, t_minishell *mini);
 
 #endif

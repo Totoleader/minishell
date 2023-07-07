@@ -12,6 +12,7 @@ SRCS    := src/main.c \
 			src/parsing/interpret_dollar_sign.c \
 			src/parsing/parse_utils.c \
 			src/parsing/trim_quotes.c \
+			src/parsing/free.c \
 			src/commands/commands.c \
 			src/commands/echo.c \
 			src/commands/exit.c \
