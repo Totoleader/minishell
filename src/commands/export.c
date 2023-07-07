@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/06 14:30:58 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:33:42 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,22 @@ void	export_(t_minishell *mini, t_commands *command)
 	char	*varname;
 
 	error_code = 0;
-	i = 1;
+	i = 0;
 	if (command->args[i] == NULL)
 		env_(mini);
 	else
 	{
-		while (command->args[i] != NULL)
+		while (command->args[++i] != NULL)
 		{
 			varname = get_varname(command->args[i]);
 			if (!varname)
-			{
-				i++;
 				continue ;
-			}
 			if (!is_valididentifier(varname))
 				printf_err("minishell: export: \'$\': Invalid identifier\n",
 					varname);
 			else
 				add_var(mini, command->args[i]);
 			free(varname);
-			i++;
 		}
 	}
 }

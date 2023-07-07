@@ -23,6 +23,7 @@ SRCS    := src/main.c \
 			src/commands/path.c \
 			src/commands/commands_utils.c \
 			src/commands/export_utils.c \
+			src/commands/heredoc.c \
 
 OBJS    := ${SRCS:.c=.o}
 

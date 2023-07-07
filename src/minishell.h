@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 14:07:08 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/07 10:57:50 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	unset_(t_minishell *mini, t_commands *command);
 void	pwd_(t_minishell *mini);
 void	cd_(t_commands *cmds, t_minishell *mini);
 int		get_path(t_commands *cmd, t_minishell *mini);
+void	here_doc(t_commands *cmd, t_minishell *mini);
 
 //parsing
 t_token		*parse_input(char *input, t_minishell *mini);
@@ -126,7 +127,7 @@ int	get_path(t_commands *cmd, t_minishell *mini);
 char	*join_path(char *dir, char *cmd_name);
 void	ft_free_tab(char **tabl);
 char	**split_env(t_minishell *mini);
-void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
+void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
 void	dup2_(int fd, int std);
 void reset_std_in_out(int stdin_backup, int stdout_backup);
 void	printf_err(char *format, char *var);

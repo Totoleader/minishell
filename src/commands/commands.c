@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 13:55:23 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:24:07 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 	while (current)
 	{
 		//check acess before and dont exec cmd
-		if (cmds->type_in != REDIR_IN_DELIM && current->infile && access(current->infile, F_OK | R_OK) != 0)
+		if (current->type_in != REDIR_IN_DELIM && current->infile && access(current->infile, F_OK | R_OK) != 0)
 		{
 			error_code = 1;
 			printf("minishell: %s: Permission denied\n", current->infile);
@@ -290,7 +290,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 
 		if (current->next)
 			pipe(pipe_fd);
-		redir(current, is_not_first, pipe_fd, last_pipe);
+		redir(mini, current, is_not_first, pipe_fd, last_pipe);
 		if (!execute_builtin(current, mini))
 			execve_command(current, mini);
 		if (current->next)
