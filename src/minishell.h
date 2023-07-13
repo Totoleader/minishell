@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/13 13:03:06 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:19:02 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 # define INTERACTIVE	1
 # define EXEC			2
 # define HEREDOC		3
+
+# define TEMP_FILE		"temp.msh"
 
 extern int	error_code;
 
@@ -122,6 +124,8 @@ void		unset_(t_minishell *mini, t_commands *command);
 void		pwd_(t_minishell *mini);
 void		cd_(t_commands *cmds, t_minishell *mini);
 int			get_path(t_commands *cmd, t_minishell *mini);
+
+//int			exec_heredoc(t_commands *cmd, t_minishell *mini);
 void		here_doc(t_commands *cmd, t_minishell *mini);
 
 //parsing
@@ -152,7 +156,7 @@ int			count_cmds(t_token *tokens);
 t_commands	*new_cmd(t_commands **cmds);
 
 // signals
-void	init_sighandler(int state);
+void		init_sighandler(int state);
 
 //free
 void		free_cmds(t_commands *cmds);

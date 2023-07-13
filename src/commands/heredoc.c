@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 13:13:14 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:20:05 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ void	here_doc(t_commands *cmd, t_minishell *mini)
 	int		fd;
 
 	first = 1;
-	fd = open("temp", O_WRONLY | O_APPEND | O_CREAT, 0777);
-	if (fd == -1)
+	fd = open(TEMP_FILE, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (fd < 0)
 		return ;
 	while (first || hd_buf)
 	{
-		init_sighandler(HEREDOC);
 		first = 0;
 		hd_buf = readline("> ");
 		if (error_code == 1)
@@ -117,3 +116,28 @@ void	here_doc(t_commands *cmd, t_minishell *mini)
 	}
 	close(fd);
 }
+
+// int	exec_heredoc(t_commands *cmd, t_minishell *mini)
+// {
+// 	int		pid;
+// 	int		fd;
+// 	pid_t	wstatus;
+
+// 	init_sighandler(HEREDOC);
+// 	fd = open(TEMP_FILE, O_WRONLY | O_APPEND | O_CREAT, 0644);
+// 	if (fd < 0)
+// 	{
+// 		ft_putstr_fd("Could not open file for heredoc.\n", 2);
+// 		return (1);
+// 	}
+// 	pid = fork();
+// 	if (pid == 0)
+// 		here_doc(cmd, mini, fd);
+// 	waitpid(0, &wstatus, 0);
+// 	if (WIFEXITED(wstatus))
+// 	{
+// 		if (WEXITSTATUS(wstatus) == 1)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
