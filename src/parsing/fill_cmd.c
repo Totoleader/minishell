@@ -6,70 +6,11 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 11:49:14 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/13 12:36:24 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_commands	*new_cmd(t_commands **cmds)
-{
-	t_commands	*new;
-
-	new = malloc(sizeof(t_commands));
-	if (!new)
-		exit(1); // ?
-	ft_memset(new, 0, sizeof(t_commands));
-	new->infile_fd = -1;
-	new->outfile_fd = -1;
-	if (*cmds == NULL)
-		*cmds = new;
-	else
-		(*cmds)->next = new;
-	return (new);
-}
-
-int	count_args(t_token *tokens)
-{
-	int	count;
-
-	count = 0;
-	while (tokens->arg && tokens->type != PIPE)
-	{
-		if (tokens->type >= REDIR_IN && tokens->type <= REDIR_OUT_APPEND)
-		{
-			tokens += 2;
-			continue ;
-		}
-		else
-			count++;
-		tokens++;
-	}
-	return (count);
-}
-
-/**
- * Returns -1 if parse error
- **/
-int	count_cmds(t_token *tokens)
-{
-	int	count;
-
-	count = 1;
-	while (tokens->arg)
-	{
-		if ((tokens->type >= REDIR_IN && tokens->type <= REDIR_OUT_APPEND)
-			&& (tokens + 1)->type != TEXT)
-			return (-1);
-		if (tokens->type == PIPE
-			&& ((tokens + 1)->type == PIPE || !(tokens + 1)->arg))
-			return (-1);
-		if (tokens->type == PIPE)
-			count++;
-		tokens++;
-	}
-	return (count);
-}
 
 // int	fill_args(t_commands **command, t_token *tokens)
 // {
@@ -100,12 +41,6 @@ int	count_cmds(t_token *tokens)
 
 int	set_cmd(t_commands **command, t_token **tok, char file)
 {
-	// if (!tok->arg || tok->type != TEXT)
-	// {
-	// 	error_code = 258;
-	// 	ft_putstr_fd("Parse error\n", 2);
-	// 	return (0);
-	// }
 	if (file == 'I')
 	{
 		(*command)->infile = (*tok + 1)->arg;
@@ -116,26 +51,9 @@ int	set_cmd(t_commands **command, t_token **tok, char file)
 		(*command)->outfile = (*tok + 1)->arg;
 		(*command)->type_out = (*tok)->type;
 	}
+	free((*tok)->arg);
 	(*tok) += 2;
 	return (1);
-}
-
-void	*clean_exit(t_commands *cmds)
-{
-	t_commands	*next;
-	int			i_args;
-
-	i_args = -1;
-	while (cmds != NULL)
-	{
-		while (cmds->args && cmds->args[++i_args])
-			free(cmds->args);
-		i_args = -1;
-		next = cmds->next;
-		free(cmds);
-		cmds = next;
-	}
-	return (NULL);
 }
 
 t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
@@ -144,10 +62,12 @@ t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
 	int			i_cmd;
 
 	new = new_cmd(cmds);
+	if (!new)
+		return (clean_exit(*cmds));
 	i_cmd = -1;
 	new->args = malloc(sizeof(char *) * (n_args + 1));
 	if (!new->args)
-		return (NULL);
+		return (clean_exit(*cmds));
 	while (tokens->arg && tokens->type != PIPE)
 	{
 		if (tokens->type == REDIR_IN || tokens->type == REDIR_IN_DELIM)
@@ -175,20 +95,21 @@ t_commands	*fill_cmd(t_token *tokens)
 	out = NULL;
 	n_cmds = count_cmds(tokens);
 	if (n_cmds == -1)
-	{
-		error_code = 258;
-		ft_putstr_fd("Parse error\n", 2);
-		return (NULL);
-	}
-	i = 0;
-	while (i < n_cmds)
+		return (parse_error());
+	i = -1;
+	while (++i < n_cmds)
 	{
 		n_args = count_args(tokens);
 		tokens = get_command(&out, tokens, n_args);
+		if (!tokens)
+			return (clean_exit(out));
 		if (tokens->type == PIPE)
+		{
+			free(tokens->arg);
 			tokens++;
-		i++;
+		}
 	}
+	//free(tokens);
 	return (out);
 }
 
