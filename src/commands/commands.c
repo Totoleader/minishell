@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:02:38 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/13 14:05:13 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 		if (current->type_in == REDIR_IN_DELIM)
-			unlink("temp");
+			unlink(TEMP_FILE);
 		is_not_first++;
 		current = current->next;
 		reset_std_in_out(std_backup);

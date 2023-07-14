@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:22:46 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:19:36 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, i
 	{
 		here_doc(cmd, mini);
 		free(cmd->infile);
-		cmd->infile = ft_strdup("temp");
+		cmd->infile = ft_strdup(TEMP_FILE);
 		cmd->infile_fd = open_(cmd, IN);
 		dup2_(cmd->infile_fd, STDIN_FILENO);
 	}
