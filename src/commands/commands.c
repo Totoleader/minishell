@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:02:38 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 11:52:19 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**convert_env(t_minishell *mini)
 	return (envtab);
 }
 
-void *execve_command(t_commands *cmds, t_minishell *mini, int *std_backup)
+void *execve_command(t_commands *cmds, t_minishell *mini, int *std_backup, int *pipe_fd)
 {
 	int pid;
 	char **env_;
@@ -84,9 +84,14 @@ void *execve_command(t_commands *cmds, t_minishell *mini, int *std_backup)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (cmds->next)
+			close(pipe_fd[READ]);
+		// else if (is_not_first && !cmds->next)
+		// 	close(pipe_fd[WRITE]);
 		env_ = convert_env(mini);
-		close(std_backup[IN]);
+		// std_backup = NULL;
 		close(std_backup[OUT]);
+		close(std_backup[IN]);
 		execve(cmds->args[0], cmds->args, env_);
 		exit(EXIT_FAILURE);
 	}
@@ -144,11 +149,11 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			pipe(pipe_fd);
 		redir(mini, current, is_not_first, pipe_fd, last_pipe);
 		if (!execute_builtin(current, mini))
-			execve_command(current, mini, std_backup);
+			execve_command(current, mini, std_backup, pipe_fd);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 		if (current->type_in == REDIR_IN_DELIM)
-			unlink("temp");
+			unlink(TEMP_FILE);
 		is_not_first++;
 		current = current->next;
 		reset_std_in_out(std_backup);

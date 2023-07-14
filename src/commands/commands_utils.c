@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:22:46 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:40:46 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,28 @@ void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, i
 	{
 		here_doc(cmd, mini);
 		free(cmd->infile);
-		cmd->infile = ft_strdup("temp");
+		cmd->infile = ft_strdup(TEMP_FILE);
 		cmd->infile_fd = open_(cmd, IN);
 		dup2_(cmd->infile_fd, STDIN_FILENO);
+		if (is_not_first)
+			close(last_pipe);
 	}
 	else if (cmd->infile)
 	{
 		cmd->infile_fd = open_(cmd, IN);
 		dup2_(cmd->infile_fd, STDIN_FILENO);
+		if (is_not_first)
+			close(last_pipe);
 	}
 	else if (is_not_first)
-	{
 		dup2_(last_pipe, STDIN_FILENO);
-	}
 	if (cmd->outfile)
 	{
 		cmd->outfile_fd = open_(cmd, OUT);
 		dup2_(cmd->outfile_fd, STDOUT_FILENO);
+		if (cmd->next)
+			close(pipe_fd[WRITE]);
 	}
 	else if (cmd->next)
-	{
 		dup2_(pipe_fd[WRITE], STDOUT_FILENO);
-	}
 }

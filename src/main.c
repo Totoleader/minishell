@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/07 13:17:55 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 11:05:46 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void minishell(t_minishell *mini)
 	while (TRUE)
 	{
 		cmds = NULL;
+		init_sighandler(INTERACTIVE);
 		input = readline("minishell $ ");
 		if (!input)
 		{
@@ -138,43 +139,20 @@ void minishell(t_minishell *mini)
 	free_mini(mini);
 }
 
-void	sig_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		error_code = 1;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if (signo == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+
 
 int main(int argc, char **argv, char **envp)
 {
 	t_minishell			*mini;
-	struct sigaction	sa;
-	struct termios		term;
+	// struct termios		term;
 
 	(void)argc;
 	(void)argv;
 
 	// Term stuff
-	tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag &= ~ECHOCTL;	// Turns off all echo ctrl characters (like ^C and ^\)
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-	// Signal stuff
-	sa.sa_handler = sig_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	// tcgetattr(STDIN_FILENO, &term);
+    // term.c_lflag &= ~ECHOCTL;	// Turns off all echo ctrl characters (like ^C and ^\)
+    // tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
 	mini = init_minishell(envp);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");
