@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
 /*   Updated: 2023/07/14 16:06:09 by scloutie         ###   ########.fr       */
@@ -56,7 +56,7 @@ static void	print_specialcase(t_minishell *mini, char *buf, int fd, int *i)
 		write(fd, "$", 1);
 	else if (buf[*i + 1] == '?')
 	{
-		errval_text = ft_itoa(error_code);
+		errval_text = ft_itoa(g_error_code);
 		if (errval_text)
 		{
 			write(fd, errval_text, ft_strlen(errval_text));
@@ -72,7 +72,7 @@ static void	print_specialcase(t_minishell *mini, char *buf, int fd, int *i)
 
 static void	convert_write(char *buf, int fd, t_minishell *mini)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	while (buf[++i])
@@ -96,8 +96,8 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 		hd_buf = readline("> ");
 		if (ft_strchr(hd_buf, 0) == hd_buf)
 			;
-		else if (hd_buf == NULL
-			|| ft_strncmp(hd_buf, cmd->infile, ft_strlen(hd_buf)) == 0)
+		else if (hd_buf == NULL || ft_strncmp(hd_buf, cmd->infile,
+				ft_strlen(hd_buf)) == 0)
 		{
 			free(hd_buf);
 			exit(0);

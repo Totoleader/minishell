@@ -6,14 +6,14 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:20:09 by macote            #+#    #+#             */
-/*   Updated: 2023/06/20 11:16:29 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 14:28:04 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //helper to alloc_copy()
-static void alloc_copy_special_cases(char *str, int *i)
+static void	alloc_copy_special_cases(char *str, int *i)
 {
 	if (str[0] == '>' && str[1] && str[1] == '>')
 		*i = 2;
@@ -28,23 +28,21 @@ static void alloc_copy_special_cases(char *str, int *i)
 }
 
 //reallocate and copy a string without the quotes
-char *alloc_copy(char *str)
+char	*alloc_copy(char *str)
 {
-	int i;
-	char *out;
-	char quote;
+	int		i;
+	char	*out;
+	char	quote;
 
 	i = 0;
-	while (str[i] != '\0' && str[i] != '>' && str[i] != '<' && str[i] != '|' && str[i] != ' ')
+	while (str[i] != '\0' && str[i] != '>' && str[i] != '<' && str[i] != '|'
+		&& str[i] != ' ')
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 		{
 			quote = str[i++];
 			if (!ft_strchr(&str[i], quote))
-			{
-				printf("quotes not closed");
-				exit(0);
-			}
+				g_error_code = -99;
 			while (str[i] != quote)
 				i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:35:28 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 12:36:30 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 13:37:44 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*parse_error(void)
 {
-	error_code = 258;
+	g_error_code = 258;
 	ft_putstr_fd("Parse error\n", 2);
 	return (NULL);
 }
@@ -69,8 +69,8 @@ int	count_cmds(t_token *tokens)
 		if ((tokens->type >= REDIR_IN && tokens->type <= REDIR_OUT_APPEND)
 			&& (tokens + 1)->type != TEXT)
 			return (-1);
-		if (tokens->type == PIPE
-			&& ((tokens + 1)->type == PIPE || !(tokens + 1)->arg))
+		if (tokens->type == PIPE && ((tokens + 1)->type == PIPE || !(tokens
+					+ 1)->arg))
 			return (-1);
 		if (tokens->type == PIPE)
 			count++;

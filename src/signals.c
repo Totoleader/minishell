@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
 /*   Updated: 2023/07/14 16:02:51 by scloutie         ###   ########.fr       */
@@ -15,7 +15,7 @@
 void	sig_interactive(int signo)
 {
 	(void)signo;
-	error_code = 1;
+	g_error_code = 1;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -29,7 +29,7 @@ void	sig_heredoc(int signo)
 	if (signo == SIGINT)
 	{
 		mini = init_minishell(NULL);
-		error_code = 1;
+		g_error_code = 1;
 		write(1, "\n", 1);
 		close(mini->hd_fd);
 		close(mini->std_bak[IN]);

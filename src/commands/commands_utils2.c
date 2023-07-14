@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands_utils2.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/14 13:45:34 by macote            #+#    #+#             */
+/*   Updated: 2023/07/14 15:25:23 by macote           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	cmd_not_found(char *str)
+{
+	g_error_code = 127;
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": Command not found.\n", STDERR_FILENO);
+}
+
+//helper to execve_command()
+void	check_access(t_commands *cmds)
+{
+	if (cmds->infile && access(cmds->infile, R_OK) == -1)
+		exit(EXIT_FAILURE);
+	if (cmds->outfile && access(cmds->infile, W_OK) == -1)
+		exit(EXIT_FAILURE);
+}
+
+//checks for file permissions
+int	check_file(t_commands **cmd)
+{
+	if ((*cmd)->type_in != REDIR_IN_DELIM && (*cmd)->infile
+		&& access((*cmd)->infile, F_OK | R_OK) != 0)
+	{
+		g_error_code = 1;
+		printf("minishell: %s: Permission denied\n", (*cmd)->infile);
+		(*cmd) = (*cmd)->next;
+		return (TRUE);
+	}
+	else if ((*cmd)->outfile && access((*cmd)->outfile, F_OK) == 0
+		&& access((*cmd)->outfile, W_OK) != 0)
+	{
+		g_error_code = 1;
+		printf("minishell: %s: Permission denied\n", (*cmd)->outfile);
+		(*cmd) = (*cmd)->next;
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+char	**convert_env(t_minishell *mini)
+{
+	t_list	*current;
+	char	**envtab;
+	int		i;
+
+	current = mini->env;
+	i = 0;
+	while (current != NULL)
+	{
+		current = current->next;
+		i++;
+	}
+	envtab = malloc(sizeof(char *) * (i + 1));
+	current = mini->env;
+	i = -1;
+	while (current != NULL)
+	{
+		envtab[++i] = ft_strdup(current->content);
+		current = current->next;
+	}
+	envtab[++i] = NULL;
+	return (envtab);
+}

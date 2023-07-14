@@ -6,14 +6,14 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 13:02:51 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 14:28:10 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //adds the beginning of the arg to the linked list
-static void find_start_of_arg(char *input, int *i, t_list **tokens)
+static void	find_start_of_arg(char *input, int *i, t_list **tokens)
 {
 	while (input[(*i)] == ' ')
 		(*i)++;
@@ -22,27 +22,26 @@ static void find_start_of_arg(char *input, int *i, t_list **tokens)
 }
 
 //null terminates the arg
-static void *find_end_of_arg(char *input, int *i)//some things will be broken with broken with quotes/////////////////////
+static void	*find_end_of_arg(char *input, int *i)
 {
-	char quote;
+	char	quote;
 
-	if (input[(*i) + 1] && ((input[(*i)] == '>' && input[(*i) + 1] == '>') || (input[(*i)] == '<' && input[(*i) + 1] == '<')))
+	if (input[(*i) + 1] && ((input[(*i)] == '>' && input[(*i) + 1] == '>')
+			|| (input[(*i)] == '<' && input[(*i) + 1] == '<')))
 	{
 		(*i) = (*i) + 2;
 		return (NULL);
 	}
 	else if (input[(*i)] == '|' || input[(*i)] == '<' || input[(*i)] == '>')
 		return ((*i)++, NULL);
-	while (input[(*i)] && input[(*i)] != ' ' && input[(*i)] != '|' && input[(*i)] != '<' && input[(*i)] != '>')
+	while (input[(*i)] && input[(*i)] != ' ' && input[(*i)] != '|'
+		&& input[(*i)] != '<' && input[(*i)] != '>')
 	{
 		if (input[(*i)] == '\"' || input[(*i)] == '\'')
 		{
 			quote = input[(*i)++];
 			if (!ft_strchr(&input[(*i)], quote))
-			{
-				printf("quotes not closed");
-				exit(0);
-			}
+				g_error_code = -99;
 			while (input[(*i)] != quote)
 				(*i)++;
 		}
@@ -55,7 +54,7 @@ static void *find_end_of_arg(char *input, int *i)//some things will be broken wi
 static void	parse_to_list(char *input, t_list **tokens)
 {
 	int	i;
-	
+
 	i = 0;
 	while (input[i])
 	{
@@ -66,7 +65,7 @@ static void	parse_to_list(char *input, t_list **tokens)
 }
 
 //assigns the type of the token so it can easily manipulated
-void assign_type(t_token *token)
+void	assign_type(t_token *token)
 {
 	if (!ft_strncmp(token->arg, "<", 2))
 		token->type = REDIR_IN;
@@ -78,8 +77,6 @@ void assign_type(t_token *token)
 		token->type = REDIR_OUT_APPEND;
 	else if (!ft_strncmp(token->arg, "|", 2))
 		token->type = PIPE;
-	// else if (!ft_strncmp(token->arg, "$?", 3))
-	// 	token->type = LAST_COMMAND;
 	else
 		token->type = TEXT;
 }
@@ -90,7 +87,7 @@ t_token	*parse_input(char *input, t_minishell *mini)
 	t_list	*args;
 	t_token	*tokens;
 	t_list	*current;
-	int i;
+	int		i;
 
 	args = NULL;
 	parse_to_list(input, &args);
@@ -103,7 +100,6 @@ t_token	*parse_input(char *input, t_minishell *mini)
 		assign_type(&tokens[i]);
 		interpret_dollar_signs(&tokens[i], mini);
 		trimmer(&tokens[i]);
-		// printf("%s type:%d\n", tokens[i].arg, tokens[i].type);
 		i++;
 		current = current->next;
 	}
