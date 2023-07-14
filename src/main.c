@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 11:05:46 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:56:19 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,22 @@ void	inherit_envp(t_minishell *mini, char **envp)
 
 t_minishell	*init_minishell(char **envp)
 {
-	t_minishell	*mini;
-	char		*cwd;
+	static t_minishell	*mini;
+	static char			*cwd;
 
-	mini = malloc(sizeof(t_minishell));
 	if (!mini)
-		exit(1);
-	mini->env = NULL;
-	ft_memset(mini->cwd, 0, PATH_MAX);
-	inherit_envp(mini, envp);
-	cwd = ft_getenv(mini, "PWD");
-	if (cwd)
-		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	getcwd(mini->cwd, PATH_MAX);
+	{
+		mini = malloc(sizeof(t_minishell));
+		if (!mini)
+			exit(1);
+		ft_memset(mini, 0, sizeof(t_minishell));
+		ft_memset(mini->cwd, 0, PATH_MAX);
+		inherit_envp(mini, envp);
+		cwd = ft_getenv(mini, "PWD");
+		if (cwd)
+			ft_strlcpy(mini->cwd, cwd, PATH_MAX);
+		getcwd(mini->cwd, PATH_MAX);
+	}
 	return (mini);
 }
 
@@ -144,15 +147,9 @@ void minishell(t_minishell *mini)
 int main(int argc, char **argv, char **envp)
 {
 	t_minishell			*mini;
-	// struct termios		term;
 
 	(void)argc;
 	(void)argv;
-
-	// Term stuff
-	// tcgetattr(STDIN_FILENO, &term);
-    // term.c_lflag &= ~ECHOCTL;	// Turns off all echo ctrl characters (like ^C and ^\)
-    // tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
 	mini = init_minishell(envp);
 	printf("\033[31mWelcome to minishell :)\n\n\033[0m");

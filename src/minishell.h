@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/13 14:19:02 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:58:46 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define INTERACTIVE	1
 # define EXEC			2
 # define HEREDOC		3
+# define IGNORE			4
 
 # define TEMP_FILE		"temp.msh"
 
@@ -71,12 +72,6 @@ typedef struct s_minishell_token
 	char	**args;
 	char	*flag;
 }				t_input;
-
-typedef struct s_minishell
-{
-	t_list	*env;
-	char	cwd[PATH_MAX];
-}				t_minishell;
 
 typedef struct s_token
 {
@@ -97,6 +92,15 @@ typedef struct s_commands
 	struct s_commands	*next;
 	struct s_command	*prev;
 }				t_commands;
+
+typedef struct s_minishell
+{
+	t_list	*env;
+	char	cwd[PATH_MAX];
+	int		hd_fd;
+	t_commands *cmds;
+	int			std_bak[2];
+}				t_minishell;
 
 typedef struct s_count
 {
@@ -125,8 +129,8 @@ void		pwd_(t_minishell *mini);
 void		cd_(t_commands *cmds, t_minishell *mini);
 int			get_path(t_commands *cmd, t_minishell *mini);
 
-//int			exec_heredoc(t_commands *cmd, t_minishell *mini);
-void		here_doc(t_commands *cmd, t_minishell *mini);
+int			exec_heredoc(t_commands *cmd, t_minishell *mini);
+void		here_doc(t_commands *cmd, t_minishell *mini, int fd);
 
 //parsing
 t_token		*parse_input(char *input, t_minishell *mini);
@@ -143,7 +147,7 @@ int			get_path(t_commands *cmd, t_minishell *mini);
 char		*join_path(char *dir, char *cmd_name);
 void		ft_free_tab(char **tabl);
 char		**split_env(t_minishell *mini);
-void		redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
+int			redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
 void		dup2_(int fd, int std);
 void		reset_std_in_out(int *std_backup);
 void		printf_err(char *format, char *var);
@@ -157,6 +161,8 @@ t_commands	*new_cmd(t_commands **cmds);
 
 // signals
 void		init_sighandler(int state);
+
+t_minishell	*init_minishell(char **envp);
 
 //free
 void		free_cmds(t_commands *cmds);

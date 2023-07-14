@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 11:46:04 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:01:00 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,31 +133,33 @@ void exec_cmd_master(t_commands *cmds, t_minishell *mini)
 {
 	t_commands *current;
 	int is_not_first;
-	int std_backup[2];
 	int pipe_fd[2];
 	int last_pipe;
 
 	current = cmds;
 	is_not_first = 0;
-	std_backup[IN] = dup(STDIN_FILENO);
-	std_backup[OUT] = dup(STDOUT_FILENO);
+	mini->std_bak[IN] = dup(STDIN_FILENO);
+	mini->std_bak[OUT] = dup(STDOUT_FILENO);
 	while (current)
 	{
 		if (check_file(&current))
 			continue ;
 		if (current->next)
 			pipe(pipe_fd);
-		redir(mini, current, is_not_first, pipe_fd, last_pipe);
+		if (redir(mini, current, is_not_first, pipe_fd, last_pipe) == 1)
+		{
+			break ;
+		}
 		if (!execute_builtin(current, mini))
-			execve_command(current, mini, std_backup, pipe_fd);
+			execve_command(current, mini, mini->std_bak, pipe_fd);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 		if (current->type_in == REDIR_IN_DELIM)
 			unlink(TEMP_FILE);
 		is_not_first++;
 		current = current->next;
-		reset_std_in_out(std_backup);
+		reset_std_in_out(mini->std_bak);
 	}
-	close(std_backup[IN]);
-	close(std_backup[OUT]);
+	close(mini->std_bak[IN]);
+	close(mini->std_bak[OUT]);
 }
