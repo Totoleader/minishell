@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 12:36:24 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:11:33 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ t_commands	*fill_cmd(t_token *tokens)
 	int			n_cmds;
 	int			n_args;
 	int			i;
+	t_token		*first;
 
 	out = NULL;
+	first = tokens;
 	n_cmds = count_cmds(tokens);
 	if (n_cmds == -1)
 		return (parse_error());
@@ -109,7 +111,7 @@ t_commands	*fill_cmd(t_token *tokens)
 			tokens++;
 		}
 	}
-	//free(tokens);
+	free(first);
 	return (out);
 }
 

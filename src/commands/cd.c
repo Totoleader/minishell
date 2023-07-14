@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:12:36 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 10:01:38 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 12:07:07 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	cd_(t_commands *cmds, t_minishell *mini)
 {
 	if (!cmds->args[1])
 		change_homedir(mini);
+	else if (ft_strlen(cmds->args[1]) >= PATH_MAX)
+	{
+		ft_putstr_fd("cd: Path too long\n", 2);
+		return ;
+	}
 	else
 	{
 		if (chdir(cmds->args[1]) == -1)
