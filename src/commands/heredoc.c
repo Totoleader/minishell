@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:30:30 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 16:06:09 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,12 @@ static void	convert_write(char *buf, int fd, t_minishell *mini)
 	}
 }
 
-void	here_doc(t_commands *cmd, t_minishell *mini)
+void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 {
 	char	*hd_buf;
 	int		first;
-	int		fd;
 
 	first = 1;
-	fd = open(TEMP_FILE, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (fd < 0)
-		return ;
 	while (first || hd_buf)
 	{
 		first = 0;
@@ -104,13 +100,43 @@ void	here_doc(t_commands *cmd, t_minishell *mini)
 				ft_strlen(hd_buf)) == 0)
 		{
 			free(hd_buf);
-			close(fd);
-			return ;
+			exit(0);
 		}
 		else
 			convert_write(hd_buf, fd, mini);
 		write(fd, "\n", 1);
 		free(hd_buf);
 	}
-	close(fd);
+	exit(0);
+}
+
+int	exec_heredoc(t_commands *cmd, t_minishell *mini)
+{
+	int		pid;
+	pid_t	wstatus;
+
+	init_sighandler(HEREDOC);
+	mini->hd_fd = open(TEMP_FILE, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (mini->hd_fd < 0)
+	{
+		ft_putstr_fd("Could not open file for heredoc.\n", 2);
+		return (1);
+	}
+	mini->cmds = cmd;
+	pid = fork();
+	if (pid == 0)
+		here_doc(cmd, mini, mini->hd_fd);
+	init_sighandler(IGNORE);
+	waitpid(0, &wstatus, 0);
+	if (WIFEXITED(wstatus))
+	{
+		if (WEXITSTATUS(wstatus) == 1)
+		{
+			close(mini->hd_fd);
+			unlink(TEMP_FILE);
+			return (1);
+		}
+	}
+	close(mini->hd_fd);
+	return (0);
 }

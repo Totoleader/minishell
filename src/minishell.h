@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:40:48 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:58:46 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@
 # define SINGLE_QUOTE 1
 # define DOUBLE_QUOTE 2
 
-# define INTERACTIVE 1
-# define EXEC 2
-# define HEREDOC 3
+# define INTERACTIVE	1
+# define EXEC			2
+# define HEREDOC		3
+# define IGNORE			4
 
 # define TEMP_FILE "temp.msh"
 
@@ -62,12 +63,6 @@ typedef struct s_minishell_token
 	char				**args;
 	char				*flag;
 }						t_input;
-
-typedef struct s_minishell
-{
-	t_list				*env;
-	char				cwd[PATH_MAX];
-}						t_minishell;
 
 typedef struct s_token
 {
@@ -88,6 +83,15 @@ typedef struct s_commands
 	struct s_commands	*next;
 	struct s_command	*prev;
 }						t_commands;
+
+typedef struct s_minishell
+{
+	t_list	*env;
+	char	cwd[PATH_MAX];
+	int		hd_fd;
+	t_commands *cmds;
+	int			std_bak[2];
+}				t_minishell;
 
 typedef struct s_count
 {
@@ -161,6 +165,8 @@ t_commands				*new_cmd(t_commands **cmds);
 
 // signals
 void					init_sighandler(int state);
+
+t_minishell	*init_minishell(char **envp);
 
 //free
 void					free_cmds(t_commands *cmds);
