@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 14:20:05 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 10:51:35 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	here_doc(t_commands *cmd, t_minishell *mini)
 	{
 		first = 0;
 		hd_buf = readline("> ");
-		if (error_code == 1)
-			return ;
 		if (ft_strchr(hd_buf, 0) == hd_buf)
 			;
 		else if (hd_buf == NULL
