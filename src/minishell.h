@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 16:01:07 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/07 13:21:54 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	unset_(t_minishell *mini, t_commands *command);
 void	pwd_(t_minishell *mini);
 void	cd_(t_commands *cmds, t_minishell *mini);
 int		get_path(t_commands *cmd, t_minishell *mini);
+void	here_doc(t_commands *cmd, t_minishell *mini);
 
 //parsing
 t_token		*parse_input(char *input, t_minishell *mini);
@@ -134,14 +135,15 @@ int	get_path(t_commands *cmd, t_minishell *mini);
 char	*join_path(char *dir, char *cmd_name);
 void	ft_free_tab(char **tabl);
 char	**split_env(t_minishell *mini);
-void redir(t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
+void redir(t_minishell *mini, t_commands *cmd, int is_not_first, int *pipe_fd, int last_pipe);
 void	dup2_(int fd, int std);
 void reset_std_in_out(int *std_backup);
+void	printf_err(char *format, char *var);
+int	is_valididentifier(char *arg);
 
 //free
 void free_cmds(t_commands *cmds);
 void free_mini(t_minishell *mini);
 void free_all(t_commands *cmds, t_minishell *mini);
-
 
 #endif
