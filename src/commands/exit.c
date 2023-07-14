@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:23:07 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 11:20:38 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:28:18 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_(t_commands *cmds, t_minishell *mini) // free readline buffer
+//exit builtin
+void	exit_(t_commands *cmds, t_minishell *mini)
 {
 	long long	return_value;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:32:57 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:22 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	*get_varname(char *arg)
 	return (out);
 }
 
+//adds a var
 static void	add_var(t_minishell *mini, char *arg)
 {
 	char	*content;
@@ -62,6 +63,7 @@ static void	add_var(t_minishell *mini, char *arg)
 	}
 }
 
+//prints format like bash
 void	print_declare(t_minishell *mini)
 {
 	t_list	*lst;
@@ -84,12 +86,13 @@ void	print_declare(t_minishell *mini)
 	}
 }
 
+//main export builtin function
 void	export_(t_minishell *mini, t_commands *command)
 {
 	int		i;
 	char	*varname;
 
-	error_code = 0;
+	g_error_code = 0;
 	i = 0;
 	if (command->args[1] == NULL)
 		print_declare(mini);

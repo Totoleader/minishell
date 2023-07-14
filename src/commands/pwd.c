@@ -6,15 +6,16 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 10:42:53 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 11:52:30 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:30:41 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//pwd builtin
 void	pwd_(t_minishell *mini)
 {
-	error_code = 0;
+	g_error_code = 0;
 	if (mini->cwd[0])
 		printf("%s\n", mini->cwd);
 }

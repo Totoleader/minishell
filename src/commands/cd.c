@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:12:36 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 12:07:07 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:27:48 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//changes the home directory when no args in cd
 static void	change_homedir(t_minishell *mini)
 {
 	char	*homedir;
@@ -32,6 +33,7 @@ static void	change_homedir(t_minishell *mini)
 	}
 }
 
+//main function for cd builtin
 void	cd_(t_commands *cmds, t_minishell *mini)
 {
 	if (!cmds->args[1])
@@ -45,7 +47,7 @@ void	cd_(t_commands *cmds, t_minishell *mini)
 	{
 		if (chdir(cmds->args[1]) == -1)
 		{
-			error_code = 1;
+			g_error_code = 1;
 			if (access(cmds->args[1], F_OK))
 				printf("cd: not a directory: %s\n", cmds->args[1]);
 			else
@@ -53,7 +55,7 @@ void	cd_(t_commands *cmds, t_minishell *mini)
 		}
 		else
 		{
-			error_code = 0;
+			g_error_code = 0;
 			ft_setenv(mini, "OLDPWD", mini->cwd);
 			getcwd(mini->cwd, PATH_MAX);
 			ft_setenv(mini, "PWD", mini->cwd);

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:21:06 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/06 14:06:51 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:02:34 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 /**
  * Finds the env variable at specified index and deletes it
@@ -54,7 +52,7 @@ void	unset_(t_minishell *mini, t_commands *command)
 	int		i;
 	char	*to_find;
 
-	error_code = 0;
+	g_error_code = 0;
 	lst = mini->env;
 	i = 1;
 	while (command->args[i] != NULL)

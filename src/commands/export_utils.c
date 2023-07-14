@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 14:04:21 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/06 14:07:01 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:29:11 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft/libft.h"
 
+//deals with error
 void	printf_err(char *format, char *var)
 {
 	int	i;
@@ -28,6 +29,7 @@ void	printf_err(char *format, char *var)
 	}
 }
 
+//checks if arg is valid
 int	is_valididentifier(char *arg)
 {
 	int		is_valid_first;

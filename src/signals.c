@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/13 13:11:00 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 13:36:50 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sig_interactive(int signo)
 {
 	(void)signo;
-	error_code = 1;
+	g_error_code = 1;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -26,7 +26,7 @@ void	sig_heredoc(int signo)
 {
 	if (signo == SIGINT)
 	{
-		error_code = 1;
+		g_error_code = 1;
 		write(1, "\n", 1);
 		exit(1);
 	}
