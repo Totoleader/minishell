@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:23:07 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 16:04:05 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/14 11:20:38 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_(t_commands *cmds, t_minishell *mini)
+void	exit_(t_commands *cmds, t_minishell *mini) // free readline buffer
 {
 	long long	return_value;
 
@@ -23,7 +23,7 @@ void	exit_(t_commands *cmds, t_minishell *mini)
 		{
 			dup2(STDERR_FILENO, STDOUT_FILENO);
 			printf("Minishell: exit: %s: numeric argument required",
-					cmds->args[1]);
+				cmds->args[1]);
 			return_value = 255;
 		}
 	}
