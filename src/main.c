@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
 /*   Updated: 2023/07/17 11:34:42 by scloutie         ###   ########.fr       */
@@ -39,8 +39,12 @@ void	minishell(t_minishell *mini)
 			add_history(input);
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
-		exec_cmd_master(cmds, mini);
-		free_cmds(cmds);
+		// if (cmds)
+		// {
+			exec_cmd_master(cmds, mini);
+			free_cmds(cmds);
+		// }
+		
 	}
 	free_mini(mini);
 }
