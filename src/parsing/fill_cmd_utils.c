@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:35:28 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 13:37:44 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 13:45:02 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	count_cmds(t_token *tokens)
 	return (count);
 }
 
-t_commands	*new_cmd(t_commands **cmds)
+t_commands	*new_cmd(void)
 {
 	t_commands	*new;
 
@@ -89,9 +89,5 @@ t_commands	*new_cmd(t_commands **cmds)
 	ft_memset(new, 0, sizeof(t_commands));
 	new->infile_fd = -1;
 	new->outfile_fd = -1;
-	if (*cmds == NULL)
-		*cmds = new;
-	else
-		(*cmds)->next = new;
 	return (new);
 }
