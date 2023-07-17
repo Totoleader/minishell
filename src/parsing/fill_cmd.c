@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 12:11:14 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 11:38:08 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_commands	*fill_cmd(t_token *tokens)
 	out = NULL;
 	first = tokens;
 	n_cmds = count_cmds(tokens);
+	if (!tokens)
+		return (NULL);
 	if (n_cmds == -1)
 		return (parse_error());
 	i = -1;

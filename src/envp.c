@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:38:53 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:35:11 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 12:27:49 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,20 @@ void	inherit_envp(t_minishell *mini, char **envp)
 //inits the mini struct that contains env vars
 t_minishell	*init_minishell(char **envp)
 {
-	t_minishell	*mini;
-	char		*cwd;
-
-	mini = malloc(sizeof(t_minishell));
+	static t_minishell	*mini;
+	static char			*cwd;
 	if (!mini)
-		exit(1);
-	mini->env = NULL;
-	ft_memset(mini->cwd, 0, PATH_MAX);
-	inherit_envp(mini, envp);
-	cwd = ft_getenv(mini, "PWD");
-	if (cwd)
-		ft_strlcpy(mini->cwd, cwd, PATH_MAX);
-	getcwd(mini->cwd, PATH_MAX);
+	{
+		mini = malloc(sizeof(t_minishell));
+		if (!mini)
+			exit(1);
+		ft_memset(mini, 0, sizeof(t_minishell));
+		ft_memset(mini->cwd, 0, PATH_MAX);
+		inherit_envp(mini, envp);
+		cwd = ft_getenv(mini, "PWD");
+		if (cwd)
+			ft_strlcpy(mini->cwd, cwd, PATH_MAX);
+		getcwd(mini->cwd, PATH_MAX);
+	}
 	return (mini);
 }

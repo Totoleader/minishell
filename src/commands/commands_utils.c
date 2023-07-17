@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 12:52:30 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 11:22:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ void	reset_std_in_out(int *std_backup)
 }
 
 //does the right output redirections
-void	redir_in(t_minishell *mini, t_commands *cmd, int is_not_first,
+int	redir_in(t_minishell *mini, t_commands *cmd, int is_not_first,
 		int last_pipe)
 {
 	if (cmd->type_in == REDIR_IN_DELIM)
 	{
-		exec_heredoc(cmd, mini);
+		if (exec_heredoc(cmd, mini) == 1)
+			return (1);
 		free(cmd->infile);
 		cmd->infile = ft_strdup(TEMP_FILE);
 		cmd->infile_fd = open_(cmd, IN);
@@ -68,6 +69,7 @@ void	redir_in(t_minishell *mini, t_commands *cmd, int is_not_first,
 	}
 	else if (is_not_first)
 		dup2_(last_pipe, STDIN_FILENO);
+	return (0);
 }
 
 //does the right input redirections

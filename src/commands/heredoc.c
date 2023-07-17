@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 16:06:09 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:28:11 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,7 @@ int	exec_heredoc(t_commands *cmd, t_minishell *mini)
 	init_sighandler(HEREDOC);
 	mini->hd_fd = open(TEMP_FILE, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (mini->hd_fd < 0)
-	{
-		ft_putstr_fd("Could not open file for heredoc.\n", 2);
 		return (1);
-	}
 	mini->cmds = cmd;
 	pid = fork();
 	if (pid == 0)
