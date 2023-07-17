@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 16:46:35 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:05:55 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_sighandler(int state)
 	else if (state == EXEC)
 	{
 		signal(SIGINT, NULL);
-		signal(SIGQUIT, NULL); // do this to avoid minshell $ minishell $
+		signal(SIGQUIT, NULL);
 	}
 	else if (state == HEREDOC)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 13:46:16 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:18:46 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ typedef struct s_commands
 
 typedef struct s_minishell
 {
-	t_list	*env;
-	char	cwd[PATH_MAX];
-	int		hd_fd;
-	t_commands *cmds;
+	t_list		*env;
+	char		cwd[PATH_MAX];
+	int			hd_fd;
+	t_commands	*cmds;
 	int			std_bak[2];
 }				t_minishell;
 
@@ -109,7 +109,8 @@ typedef struct s_fds
 }						t_fds;
 
 //commands
-void					exec_cmd_master(t_commands *cmds, t_minishell *mini);
+void					exec_cmd_master(t_commands *cmds, t_minishell *mini, 
+							int *std_backup);
 void					echo_(char **args);
 void					exit_(t_commands *cmds, t_minishell *mini);
 void					env_(t_minishell *mini);
@@ -166,7 +167,7 @@ t_commands				*new_cmd(void);
 // signals
 void					init_sighandler(int state);
 
-t_minishell	*init_minishell(char **envp);
+t_minishell				*init_minishell(char **envp);
 
 //free
 void					free_cmds(t_commands *cmds);
