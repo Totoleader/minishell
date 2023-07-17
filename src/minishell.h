@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 16:21:45 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:22:42 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char					*join_path(char *dir, char *cmd_name);
 void					ft_free_tab(char **tabl);
 void					inherit_envp(t_minishell *mini, char **envp);
 char					**split_env(t_minishell *mini);
-void					redir_in(t_minishell *mini, t_commands *cmd,
+int						redir_in(t_minishell *mini, t_commands *cmd,
 							int is_not_first, int last_pipe);
 void					redir_out(t_commands *cmd, int *pipe_fd);
 
