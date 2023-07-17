@@ -6,47 +6,11 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:21:31 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:09:18 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static char	*get_varname(char *arg)
-{
-	char	*out;
-	int		i;
-
-	i = 0;
-	while (arg[i] && arg[i] != ' ')
-		i++;
-	out = malloc(sizeof(char) * (i + 1));
-	if (!out)
-		return (NULL);
-	i = 0;
-	while (arg[i] && arg[i] != ' ')
-	{
-		out[i] = arg[i];
-		i++;
-	}
-	out[i] = '\0';
-	return (out);
-}
-
-static void	print_env(t_minishell *mini, char *buf, int fd, int *i)
-{
-	char	*varname;
-	char	*varvalue;
-
-	varname = get_varname(&buf[*i + 1]);
-	if (!varname)
-		return ;
-	varvalue = ft_getenv(mini, varname);
-	if (varvalue)
-		ft_putstr_fd(varvalue, fd);
-	(*i) += ft_strlen(varname);
-	free(varname);
-}
 
 static void	print_specialcase(t_minishell *mini, char *buf, int fd, int *i)
 {
@@ -100,6 +64,7 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 				ft_strlen(hd_buf)) == 0)
 		{
 			free(hd_buf);
+			exit_hd(cmd, mini, fd);
 			exit(0);
 		}
 		else
@@ -107,9 +72,6 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 		write(fd, "\n", 1);
 		free(hd_buf);
 	}
-	free_cmds(cmd);
-	free_mini(mini);
-	exit(0);
 }
 
 int	exec_heredoc(t_commands *cmd, t_minishell *mini)

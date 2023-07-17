@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 14:14:25 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:52:49 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*execve_command(t_commands *cmds, t_minishell *mini, int *std_backup,
 }
 
 //main function that deals with commands
-void	exec_cmd_master(t_commands *cmds, t_minishell *mini, int *std_backup)
+void	exec_cmd_master(t_commands *cmds, t_minishell *mini)
 {
 	t_commands	*current;
 	int			is_not_first;
@@ -79,10 +79,10 @@ void	exec_cmd_master(t_commands *cmds, t_minishell *mini, int *std_backup)
 			break ;
 		redir_out(current, pipe_fd);
 		if (!execute_builtin(current, mini))
-			execve_command(current, mini, std_backup, pipe_fd);
+			execve_command(current, mini, mini->std_bak, pipe_fd);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
-		prep_next_cmd(&current, std_backup, &is_not_first);
+		prep_next_cmd(&current, mini->std_bak, &is_not_first);
 	}
-	close_std_backups(std_backup);
+	close_std_backups(mini->std_bak);
 }

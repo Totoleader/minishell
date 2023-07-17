@@ -31,6 +31,7 @@ SRCS    := src/main.c \
 			src/commands/commands_utils3.c \
 			src/commands/export_utils.c \
 			src/commands/heredoc.c \
+			src/commands/hd_utils.c \
 
 OBJS    := ${SRCS:.c=.o}
 
