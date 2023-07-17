@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 14:17:22 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 14:55:05 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	minishell(t_minishell *mini)
 	t_token		*tokens;
 	char		*input;
 	t_commands	*cmds;
-	int			std_backup[2];
 
 	while (TRUE)
 	{
@@ -41,9 +40,9 @@ void	minishell(t_minishell *mini)
 			add_history(input);
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
-		std_backup[IN] = dup(STDIN_FILENO);
-		std_backup[OUT] = dup(STDOUT_FILENO);
-		exec_cmd_master(cmds, mini, std_backup);
+		mini->std_bak[IN] = dup(STDIN_FILENO);
+		mini->std_bak[OUT] = dup(STDOUT_FILENO);
+		exec_cmd_master(cmds, mini);
 		free_cmds(cmds);
 	}
 	free_mini(mini);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 14:18:46 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 15:09:10 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ typedef struct s_fds
 }						t_fds;
 
 //commands
-void					exec_cmd_master(t_commands *cmds, t_minishell *mini, 
-							int *std_backup);
+void					exec_cmd_master(t_commands *cmds, t_minishell *mini);
 void					echo_(char **args);
 void					exit_(t_commands *cmds, t_minishell *mini);
 void					env_(t_minishell *mini);
@@ -119,7 +118,6 @@ void					unset_(t_minishell *mini, t_commands *command);
 void					pwd_(t_minishell *mini);
 void					cd_(t_commands *cmds, t_minishell *mini);
 int						get_path(t_commands *cmd, t_minishell *mini);
-int						exec_heredoc(t_commands *cmd, t_minishell *mini);
 void					close_std_backups(int *std_backup);
 int						init_vars(t_commands **current, t_commands *cmds,
 							int *is_not_first);
@@ -164,6 +162,11 @@ int						count_args(t_token *tokens);
 int						count_cmds(t_token *tokens);
 t_commands				*new_cmd(void);
 
+//heredoc
+void					print_env(t_minishell *mini, char *buf, int fd, int *i);
+void					exit_hd(t_commands *cmd, t_minishell *mini, int fd);
+int						exec_heredoc(t_commands *cmd, t_minishell *mini);
+
 // signals
 void					init_sighandler(int state);
 
@@ -179,5 +182,7 @@ void					cmd_not_found(char *str);
 void					check_access(t_commands *cmds);
 int						check_file(t_commands **cmd);
 char					**convert_env(t_minishell *mini);
+
+
 
 #endif
