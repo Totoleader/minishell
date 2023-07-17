@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 11:38:08 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:50:05 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,31 @@ int	set_cmd(t_commands **command, t_token **tok, char file)
 	return (1);
 }
 
+t_commands	*cmd_last(t_commands *cmds)
+{
+	if (!cmds)
+		return (NULL);
+	while (cmds->next)
+		cmds = cmds->next;
+	return (cmds);
+}
+
+void	cmd_addback(t_commands **cmds, t_commands *new)
+{
+	if (!cmds)
+		return ;
+	if (!(*cmds))
+		*cmds = new;
+	else
+		cmd_last(*cmds)->next = new;
+}
+
 t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
 {
 	t_commands	*new;
 	int			i_cmd;
 
-	new = new_cmd(cmds);
+	new = new_cmd();
 	if (!new)
 		return (clean_exit(*cmds));
 	i_cmd = -1;
@@ -47,14 +66,12 @@ t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
 			set_cmd(&new, &tokens, 'I');
 		else if (tokens->type == REDIR_OUT || tokens->type == REDIR_OUT_APPEND)
 			set_cmd(&new, &tokens, 'O');
-		else if (tokens->type == TEXT)
-		{
-			new->args[++i_cmd] = tokens->arg;
-			tokens++;
-		}
+		else if (tokens->type == TEXT && ++tokens)
+			new->args[++i_cmd] = (tokens - 1)->arg;
 	}
 	if (i_cmd != -1)
 		new->args[++i_cmd] = NULL;
+	cmd_addback(cmds, new);
 	return (tokens);
 }
 
