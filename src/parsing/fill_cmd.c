@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:06:56 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 12:11:14 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
 	if (!new)
 		return (clean_exit(*cmds));
 	i_cmd = -1;
-	new->args = malloc(sizeof(char *) * (n_args + 1));
+	new->args = ft_calloc(sizeof(char *), n_args + 1);
 	if (!new->args)
 		return (clean_exit(*cmds));
 	while (tokens->arg && tokens->type != PIPE)
@@ -76,8 +76,8 @@ t_commands	*fill_cmd(t_token *tokens)
 	{
 		n_args = count_args(tokens);
 		tokens = get_command(&out, tokens, n_args);
-		if (!tokens)
-			return (clean_exit(out));
+		if (!tokens->arg)
+			return (out);
 		if (tokens->type == PIPE && ++tokens)
 			free((tokens - 1)->arg);
 	}

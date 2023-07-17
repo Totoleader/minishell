@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/14 16:29:18 by macote           ###   ########.fr       */
-=======
-/*   Updated: 2023/07/14 16:01:00 by scloutie         ###   ########.fr       */
->>>>>>> 7bdcba64219be67184631ac82e8caea4326223df
+/*   Updated: 2023/07/17 12:13:51 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
 //deals with commands that don't need to be forked/execve (builtins)
 int	execute_builtin(t_commands *cmds, t_minishell *mini)
 {
-	if (!cmds->args)
+	if (!cmds->args || !cmds->args[0])
 		return (TRUE);
 	if (!ft_strncmp(cmds->args[0], "exit", 5))
 		return (exit_(cmds, mini), TRUE);

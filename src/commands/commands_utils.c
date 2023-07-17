@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:56:00 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 16:04:22 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:20:44 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	redir_in(t_minishell *mini, t_commands *cmd, int is_not_first,
 {
 	if (cmd->type_in == REDIR_IN_DELIM)
 	{
-		if (exec_heredoc(cmd, mini) == 1)
-			return (1);
+		exec_heredoc(cmd, mini);
 		free(cmd->infile);
 		cmd->infile = ft_strdup(TEMP_FILE);
 		cmd->infile_fd = open_(cmd, IN);
@@ -83,5 +82,4 @@ void	redir_out(t_commands *cmd, int *pipe_fd)
 	}
 	else if (cmd->next)
 		dup2_(pipe_fd[WRITE], STDOUT_FILENO);
-	return (0);
 }
