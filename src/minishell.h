@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:58:46 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/14 16:21:45 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void					unset_(t_minishell *mini, t_commands *command);
 void					pwd_(t_minishell *mini);
 void					cd_(t_commands *cmds, t_minishell *mini);
 int						get_path(t_commands *cmd, t_minishell *mini);
-void					here_doc(t_commands *cmd, t_minishell *mini);
+int						exec_heredoc(t_commands *cmd, t_minishell *mini);
 void					close_std_backups(int *std_backup);
 int						init_vars(t_commands **current, t_commands *cmds,
 							int *is_not_first);
