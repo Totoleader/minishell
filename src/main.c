@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 11:34:42 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:17:22 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	minishell(t_minishell *mini)
 	t_token		*tokens;
 	char		*input;
 	t_commands	*cmds;
+	int			std_backup[2];
+
 	while (TRUE)
 	{
 		cmds = NULL;
@@ -33,18 +35,16 @@ void	minishell(t_minishell *mini)
 		if (!input)
 		{
 			free_all(cmds, mini);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		if (input && *input)
 			add_history(input);
 		tokens = parse_input(input, mini);
 		cmds = fill_cmd(tokens);
-		// if (cmds)
-		// {
-			exec_cmd_master(cmds, mini);
-			free_cmds(cmds);
-		// }
-		
+		std_backup[IN] = dup(STDIN_FILENO);
+		std_backup[OUT] = dup(STDOUT_FILENO);
+		exec_cmd_master(cmds, mini, std_backup);
+		free_cmds(cmds);
 	}
 	free_mini(mini);
 }

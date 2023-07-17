@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:50:05 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:53:54 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ t_commands	*fill_cmd(t_token *tokens)
 	while (++i < n_cmds)
 	{
 		n_args = count_args(tokens);
-		tokens = get_command(&out, tokens, n_args);
+		tokens = get_command(& out, tokens, n_args);
 		if (!tokens->arg)
-			return (out);
+			break ;
 		if (tokens->type == PIPE && ++tokens)
 			free((tokens - 1)->arg);
 	}

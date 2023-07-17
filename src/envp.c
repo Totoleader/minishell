@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:38:53 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 12:27:49 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:04:15 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_minishell	*init_minishell(char **envp)
 {
 	static t_minishell	*mini;
 	static char			*cwd;
+
 	if (!mini)
 	{
 		mini = malloc(sizeof(t_minishell));

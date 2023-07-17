@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 //deals with commands that don't need to be forked/execve (builtins)
@@ -61,18 +60,15 @@ void	*execve_command(t_commands *cmds, t_minishell *mini, int *std_backup,
 }
 
 //main function that deals with commands
-void	exec_cmd_master(t_commands *cmds, t_minishell *mini)
+void	exec_cmd_master(t_commands *cmds, t_minishell *mini, int *std_backup)
 {
 	t_commands	*current;
 	int			is_not_first;
-	int			std_backup[2];
 	int			pipe_fd[2];
 	int			last_pipe;
 
 	if (!init_vars(&current, cmds, &is_not_first))
 		return ;
-	std_backup[IN] = dup(STDIN_FILENO);
-	std_backup[OUT] = dup(STDOUT_FILENO);
 	while (current)
 	{
 		if (check_file(&current))

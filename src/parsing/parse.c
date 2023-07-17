@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 12:00:48 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/17 14:06:43 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	*find_end_of_arg(char *input, int *i)
 	char	quote;
 
 	if (input[*i] && input[(*i) + 1] && ((input[(*i)] == '>' && input[(*i)
-				+ 1] == '>') || (input[(*i)] == '<' && input[(*i) + 1] == '<')))
+					+ 1] == '>')
+			|| (input[(*i)] == '<' && input[(*i) + 1] == '<')))
 	{
 		(*i) = (*i) + 2;
 		return (NULL);
