@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 11:22:42 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:46:16 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void					*parse_error(void);
 void					*clean_exit(t_commands *cmds);
 int						count_args(t_token *tokens);
 int						count_cmds(t_token *tokens);
-t_commands				*new_cmd(t_commands **cmds);
+t_commands				*new_cmd(void);
 
 // signals
 void					init_sighandler(int state);
