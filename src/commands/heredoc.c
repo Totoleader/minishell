@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:09:18 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:36:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 		write(fd, "\n", 1);
 		free(hd_buf);
 	}
+	free(hd_buf);
+	exit_hd(cmd, mini, fd);
+	exit(1);
 }
 
 int	exec_heredoc(t_commands *cmd, t_minishell *mini)
