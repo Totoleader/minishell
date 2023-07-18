@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 15:09:10 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:16:05 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ int						exec_heredoc(t_commands *cmd, t_minishell *mini);
 
 // signals
 void					init_sighandler(int state);
-
 t_minishell				*init_minishell(char **envp);
 
 //free
@@ -182,7 +181,5 @@ void					cmd_not_found(char *str);
 void					check_access(t_commands *cmds);
 int						check_file(t_commands **cmd);
 char					**convert_env(t_minishell *mini);
-
-
 
 #endif
