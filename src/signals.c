@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:59:36 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:10:39 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ void	init_sighandler(int state)
 	{
 		signal(SIGINT, sig_interactive);
 		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (state == EXEC)
-	{
-		signal(SIGINT, NULL);
-		signal(SIGQUIT, NULL);
 	}
 	else if (state == HEREDOC)
 	{
