@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 11:10:44 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:58:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*execve_command(t_commands *cmds, t_minishell *mini, int *std_backup,
 
 	if (!get_path(cmds, mini))
 		return (cmd_not_found(cmds->args[0]), NULL);
-	init_sighandler(IGNORE);
+	init_sighandler(EXEC);
 	pid = fork();
 	if (pid == 0)
 	{

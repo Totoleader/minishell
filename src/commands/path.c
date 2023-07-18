@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:26:50 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/03 13:05:41 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/18 16:49:27 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,20 @@ char	**split_env(t_minishell *mini)
 	return (tabenv);
 }
 
-void	ft_free_tab(char **tabl)
+int	ft_free_tab(char **tabl)
 {
 	int	i;
 
 	i = 0;
 	if (!tabl)
-		return ;
+		return (1);
 	while (tabl[i])
 	{
 		free(tabl[i]);
 		i++;
 	}
 	free(tabl);
+	return (1);
 }
 
 char	*join_path(char *dir, char *cmd_name)
@@ -57,7 +58,8 @@ int	get_path(t_commands *cmd, t_minishell *mini)
 	char	cmd_name[PATH_MAX];
 
 	i = -1;
-	if (access(cmd->args[0], F_OK) == 0)
+	if ((!ft_strncmp(cmd->args[0], "./", 2) || ft_strchr(cmd->args[0], '/'))
+		&& access(cmd->args[0], F_OK) == 0)
 		return (1);
 	tabenv = split_env(mini);
 	ft_strlcpy(cmd_name, cmd->args[0], PATH_MAX);
@@ -68,10 +70,7 @@ int	get_path(t_commands *cmd, t_minishell *mini)
 	{
 		cmd->args[0] = join_path(tabenv[i], cmd_name);
 		if (access(cmd->args[0], F_OK) == 0)
-		{
-			ft_free_tab(tabenv);
-			return (1);
-		}
+			return (ft_free_tab(tabenv));
 		free(cmd->args[0]);
 	}
 	ft_free_tab(tabenv);
