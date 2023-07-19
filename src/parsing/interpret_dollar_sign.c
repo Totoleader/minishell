@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 14:36:24 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 11:32:47 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,43 @@ void	replace_with_var_content(t_token *token, char *new_content, t_count *c,
 	c->i++;
 	while (token->arg[c->i] && token->arg[c->i] != ' '
 		&& token->arg[c->i] != '\'' && token->arg[c->i] != '\"'
-		&& token->arg[c->i] != '$')
+		&& token->arg[c->i] != '$' && token->arg[c->i] != '?')
 		c->i++;
 	c->k = 0;
 	while (current->content && current->content[c->k])
 		new_content[c->j++] = current->content[c->k++];
 	current = current->next;
+}
+
+void free_helper(t_token *token, t_list *vars)
+{
+	int i;
+	t_list	*current;
+	char *temp;
+
+	current = vars;
+	temp = token->arg;
+	i = 0;
+	while (current && ft_strnstr(temp, "$?", ft_strlen(temp)))
+	{
+		while (*temp && *temp != '$')
+		{		
+			temp++;
+		}
+		if (!ft_strncmp(temp, "$?", 2))
+		{
+			temp = temp + 2;
+			free(current->content);
+			current = current->next;
+		}
+		else
+		{
+			temp++;
+			if (*temp != '$')
+				current = current->next;
+		}
+	}
+	
 }
 
 void	replace_vars(t_token *token, t_list *vars, int count)
@@ -35,7 +66,6 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 
 	c = malloc(sizeof(t_count));
 	current = vars;
-	token->arg = token->arg;
 	c->i = 0;
 	c->j = 0;
 	new_content = ft_calloc(sizeof(char), count + 1);
@@ -47,9 +77,17 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 			current = current->next;
 		}
 		else
+		{
+			if (token->arg[c->i] == '?' && token->arg[c->i - 1])
+				c->i++;
 			new_content[c->j++] = token->arg[c->i++];
+		}
 	}
 	free(c);
+	// free(vars->content);
+	free_helper(token, vars);
+
+
 	ft_lstclear(&vars);
 	free(token->arg);
 	token->arg = new_content;
@@ -86,8 +124,9 @@ char	*get_var_env_name(char *str)
 
 	count = 1;
 	while (str[count] && str[count] != ' ' && str[count] != '$'
-		&& str[count] != '\'' && str[count] != '\"')
+		&& str[count] != '\'' && str[count] != '\"' && str[0] != '?')
 		count++;
+	
 	var_name = ft_calloc(sizeof(char), count + 1);
 	i = 0;
 	while (i < count)
