@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:38:53 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 12:01:22 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:05:54 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_minishell	*init_minishell(char **envp)
 
 	if (!mini)
 	{
-		mini = malloc(sizeof(t_minishell));
+		mini = ft_calloc(1, sizeof(t_minishell));
 		if (!mini)
 			exit(EXIT_FAILURE);
 		ft_memset(mini, 0, sizeof(t_minishell));

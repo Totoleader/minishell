@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:04:35 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:07:56 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:07:37 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_varname(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != ' ')
 		i++;
-	out = malloc(sizeof(char) * (i + 1));
+	out = ft_calloc(i + 1, sizeof(char));
 	if (!out)
 		return (NULL);
 	i = 0;

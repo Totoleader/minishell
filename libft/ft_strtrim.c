@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 10:41:55 by macote            #+#    #+#             */
-/*   Updated: 2023/02/22 09:45:58 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:10:11 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*return_string(char const *s1, int removed_chars)
 	size = ft_strlen(s1) - removed_chars;
 	if (size < 0)
 		size = 0;
-	return_string = malloc(sizeof(char) * (size + 1));
+	return_string = ft_calloc(size + 1, sizeof(char));
 	if (!return_string)
 		return (NULL);
 	i = 0;

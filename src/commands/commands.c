@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 11:33:24 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:04:32 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	*execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 		close(mini->std_bak[OUT]);
 		close(mini->std_bak[IN]);
 		execve(cmds->args[0], cmds->args, env_);
+		free_all(cmds, mini);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(0, &g_error_code, 0);

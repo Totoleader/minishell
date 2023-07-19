@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 15:47:32 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:09:14 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	replace_with_var_content(t_token *token, char *new_content, t_count *c,
 	current = current->next;
 }
 
-void free_helper(t_token *token, t_list *vars)
+void	free_helper(t_token *token, t_list *vars)
 {
-	int i;
+	int		i;
 	t_list	*current;
-	char *temp;
+	char	*temp;
 
 	current = vars;
 	temp = token->arg;
@@ -39,9 +39,7 @@ void free_helper(t_token *token, t_list *vars)
 	while (current && ft_strnstr(temp, "$?", ft_strlen(temp)))
 	{
 		while (*temp && *temp != '$')
-		{		
 			temp++;
-		}
 		if (!ft_strncmp(temp, "$?", 2))
 		{
 			temp = temp + 2;
@@ -55,7 +53,6 @@ void free_helper(t_token *token, t_list *vars)
 				current = current->next;
 		}
 	}
-	
 }
 
 void	replace_vars(t_token *token, t_list *vars, int count)
@@ -64,7 +61,7 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 	char	*new_content;
 	t_count	*c;
 
-	c = malloc(sizeof(t_count));
+	c = ft_calloc(1, sizeof(t_count));
 	current = vars;
 	c->i = 0;
 	c->j = 0;
@@ -84,10 +81,7 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 		}
 	}
 	free(c);
-	// free(vars->content);
 	free_helper(token, vars);
-
-
 	ft_lstclear(&vars);
 	free(token->arg);
 	token->arg = new_content;
