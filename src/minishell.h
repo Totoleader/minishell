@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
 /*   Updated: 2023/07/18 16:48:43 by scloutie         ###   ########.fr       */
@@ -169,7 +169,6 @@ int						exec_heredoc(t_commands *cmd, t_minishell *mini);
 
 // signals
 void					init_sighandler(int state);
-
 t_minishell				*init_minishell(char **envp);
 
 //free

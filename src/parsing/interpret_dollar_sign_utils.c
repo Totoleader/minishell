@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret_dollar_sign_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:10:56 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 11:24:19 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:26:55 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ void	count_size_helper(char *args, int *i, int *count)
 	{
 		(*i)++;
 		while (args[(*i)] && args[(*i)] != ' ' && args[(*i)] != '\''
-			&& args[(*i)] != '\"' && args[(*i)] != '$')
+			&& args[(*i)] != '\"' && args[(*i)] != '$' && args[(*i)] != '?')
+			(*i)++;
+		if (args[(*i)] == '?')
 			(*i)++;
 	}
 	else if (args[(*i)])
-	{
+	{	
 		(*i)++;
 		(*count)++;
 	}
