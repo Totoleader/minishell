@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:35:28 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:45:02 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:10:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_commands	*new_cmd(void)
 {
 	t_commands	*new;
 
-	new = malloc(sizeof(t_commands));
+	new = ft_calloc(1, sizeof(t_commands));
 	if (!new)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_commands));

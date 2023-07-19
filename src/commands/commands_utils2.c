@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:45:34 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:25:23 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:07:14 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**convert_env(t_minishell *mini)
 		current = current->next;
 		i++;
 	}
-	envtab = malloc(sizeof(char *) * (i + 1));
+	envtab = ft_calloc(i + 1, sizeof(char *));
 	current = mini->env;
 	i = -1;
 	while (current != NULL)

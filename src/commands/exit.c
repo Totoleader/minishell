@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:23:07 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:28:18 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 11:59:36 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	exit_(t_commands *cmds, t_minishell *mini)
 	}
 	else
 		return_value = 0;
+	close(mini->std_bak[IN]);
+	close(mini->std_bak[OUT]);
 	free_all(cmds, mini);
 	exit(return_value);
 }

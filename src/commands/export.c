@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:30:22 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:09:53 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*get_varname(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 		i++;
-	out = malloc(sizeof(char) * (i + 1));
+	out = ft_calloc(i + 1, sizeof(char));
 	if (!out)
 		return (NULL);
 	i = 0;
