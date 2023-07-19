@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/18 11:10:39 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:10:34 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,25 @@ void	sig_heredoc(int signo)
 	}
 }
 
+void	sig_exec(int signo)
+{
+	if (signo == SIGQUIT)
+		write(1, "Quit\n", 5);
+	else if (signo == SIGINT)
+		printf("\n");
+}
+
 void	init_sighandler(int state)
 {
 	if (state == INTERACTIVE)
 	{
 		signal(SIGINT, sig_interactive);
 		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (state == EXEC)
+	{
+		signal(SIGINT, sig_exec);
+		signal(SIGQUIT, sig_exec);
 	}
 	else if (state == HEREDOC)
 	{
