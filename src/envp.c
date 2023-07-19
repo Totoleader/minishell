@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:38:53 by macote            #+#    #+#             */
-/*   Updated: 2023/07/17 14:04:15 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:01:22 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_minishell	*init_minishell(char **envp)
 	{
 		mini = malloc(sizeof(t_minishell));
 		if (!mini)
-			exit(1);
+			exit(EXIT_FAILURE);
 		ft_memset(mini, 0, sizeof(t_minishell));
 		ft_memset(mini->cwd, 0, PATH_MAX);
 		inherit_envp(mini, envp);

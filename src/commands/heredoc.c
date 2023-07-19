@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/18 11:36:30 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:02:51 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 		{
 			free(hd_buf);
 			exit_hd(cmd, mini, fd);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		else
 			convert_write(hd_buf, fd, mini);
@@ -74,7 +74,7 @@ void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 	}
 	free(hd_buf);
 	exit_hd(cmd, mini, fd);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 int	exec_heredoc(t_commands *cmd, t_minishell *mini)

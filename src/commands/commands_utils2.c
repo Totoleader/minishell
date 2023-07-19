@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:45:34 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 15:25:23 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 12:00:55 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ void	cmd_not_found(char *str)
 	g_error_code = 127;
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putstr_fd(": Command not found.\n", STDERR_FILENO);
-}
-
-//helper to execve_command()
-void	check_access(t_commands *cmds)
-{
-	if (cmds->infile && access(cmds->infile, R_OK) == -1)
-		exit(EXIT_FAILURE);
-	if (cmds->outfile && access(cmds->infile, W_OK) == -1)
-		exit(EXIT_FAILURE);
 }
 
 //checks for file permissions

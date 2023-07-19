@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:11:59 by macote            #+#    #+#             */
-/*   Updated: 2023/02/18 12:19:55 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/19 13:16:09 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	*ft_calloc(size_t count, size_t size)
 
 	i = 0;
 	total = size * count;
-	ptr = malloc(total);
-	if (!ptr)
-		return (NULL);
+	ptr = NULL;
+	while (!ptr)
+		ptr = malloc(total);	
 	while (i < total)
 	{
 		ptr[i] = 0;
