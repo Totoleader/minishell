@@ -19,15 +19,6 @@ void	cmd_not_found(char *str)
 	ft_putstr_fd(": Command not found.\n", STDERR_FILENO);
 }
 
-//helper to execve_command()
-void	check_access(t_commands *cmds)
-{
-	if (cmds->infile && access(cmds->infile, R_OK) == -1)
-		exit(EXIT_FAILURE);
-	if (cmds->outfile && access(cmds->infile, W_OK) == -1)
-		exit(EXIT_FAILURE);
-}
-
 //checks for file permissions
 int	check_file(t_commands **cmd)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/18 16:10:34 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:01:48 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sig_heredoc(int signo)
 		close(mini->std_bak[OUT]);
 		free_cmds(mini->cmds);
 		free_mini(mini);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 

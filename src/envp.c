@@ -100,7 +100,7 @@ t_minishell	*init_minishell(char **envp)
 	{
 		mini = ft_calloc(1, sizeof(t_minishell));
 		if (!mini)
-			exit(1);
+			exit(EXIT_FAILURE);
 		ft_memset(mini, 0, sizeof(t_minishell));
 		ft_memset(mini->cwd, 0, PATH_MAX);
 		inherit_envp(mini, envp);

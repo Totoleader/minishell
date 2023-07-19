@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 16:48:43 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 12:01:00 by macote           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ void					free_all(t_commands *cmds, t_minishell *mini);
 
 //coomands helpers
 void					cmd_not_found(char *str);
-void					check_access(t_commands *cmds);
 int						check_file(t_commands **cmd);
 char					**convert_env(t_minishell *mini);
 
