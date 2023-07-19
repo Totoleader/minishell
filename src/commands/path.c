@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:26:50 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/18 16:49:27 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:13:17 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int	get_path(t_commands *cmd, t_minishell *mini)
 		&& access(cmd->args[0], F_OK) == 0)
 		return (1);
 	tabenv = split_env(mini);
-	ft_strlcpy(cmd_name, cmd->args[0], PATH_MAX);
-	free(cmd->args[0]);
 	if (!tabenv)
 		return (0);
+	ft_strlcpy(cmd_name, cmd->args[0], PATH_MAX);
+	free(cmd->args[0]);
 	while (tabenv[++i] != NULL)
 	{
 		cmd->args[0] = join_path(tabenv[i], cmd_name);
