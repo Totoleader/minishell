@@ -6,7 +6,7 @@
 /*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 11:39:50 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/18 16:48:43 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void					ft_setenv(t_minishell *mini, const char *varname,
 t_list					*ft_getenv_node(t_minishell *mini, const char *varname);
 int						get_path(t_commands *cmd, t_minishell *mini);
 char					*join_path(char *dir, char *cmd_name);
-void					ft_free_tab(char **tabl);
+int						ft_free_tab(char **tabl);
 void					inherit_envp(t_minishell *mini, char **envp);
 char					**split_env(t_minishell *mini);
 int						redir_in(t_minishell *mini, t_commands *cmd,

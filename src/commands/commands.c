@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 11:10:44 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/19 11:33:24 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,22 @@ int	execute_builtin(t_commands *cmds, t_minishell *mini)
 }
 
 //deals with commands that need to be forked/execve
-void	*execve_command(t_commands *cmds, t_minishell *mini, int *std_backup,
-		int *pipe_fd)
+void	*execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 {
 	int		pid;
 	char	**env_;
 
 	if (!get_path(cmds, mini))
 		return (cmd_not_found(cmds->args[0]), NULL);
-	init_sighandler(IGNORE);
+	init_sighandler(EXEC);
 	pid = fork();
 	if (pid == 0)
 	{
 		if (cmds->next)
 			close(pipe_fd[READ]);
 		env_ = convert_env(mini);
-		close(std_backup[OUT]);
-		close(std_backup[IN]);
+		close(mini->std_bak[OUT]);
+		close(mini->std_bak[IN]);
 		execve(cmds->args[0], cmds->args, env_);
 		exit(EXIT_FAILURE);
 	}
@@ -80,7 +79,7 @@ void	exec_cmd_master(t_commands *cmds, t_minishell *mini)
 			break ;
 		redir_out(current, pipe_fd);
 		if (!execute_builtin(current, mini))
-			execve_command(current, mini, mini->std_bak, pipe_fd);
+			execve_command(current, mini, pipe_fd);
 		if (current->next)
 			last_pipe = pipe_fd[READ];
 		prep_next_cmd(&current, mini->std_bak, &is_not_first);
