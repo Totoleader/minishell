@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:42:26 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:53:54 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:55:35 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	set_cmd(t_commands **command, t_token **tok, char file)
+static int	set_cmd(t_commands **command, t_token **tok, char file)
 {
 	if (file == 'I')
 	{
@@ -29,7 +29,7 @@ int	set_cmd(t_commands **command, t_token **tok, char file)
 	return (1);
 }
 
-t_commands	*cmd_last(t_commands *cmds)
+static t_commands	*cmd_last(t_commands *cmds)
 {
 	if (!cmds)
 		return (NULL);
@@ -38,7 +38,7 @@ t_commands	*cmd_last(t_commands *cmds)
 	return (cmds);
 }
 
-void	cmd_addback(t_commands **cmds, t_commands *new)
+static void	cmd_addback(t_commands **cmds, t_commands *new)
 {
 	if (!cmds)
 		return ;
@@ -48,7 +48,7 @@ void	cmd_addback(t_commands **cmds, t_commands *new)
 		cmd_last(*cmds)->next = new;
 }
 
-t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
+static t_token	*get_command(t_commands **cmds, t_token *tokens, int n_args)
 {
 	t_commands	*new;
 	int			i_cmd;

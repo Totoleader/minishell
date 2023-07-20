@@ -6,15 +6,15 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 13:44:30 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:01:40 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // replace_vars() helper
-void	replace_with_var_content(t_token *token, char *new_content, t_count *c,
-		t_list *current)
+static void	replace_with_var_content(t_token *token, char *new_content,
+		t_count *c, t_list *current)
 {
 	c->i++;
 	while (token->arg[c->i] && token->arg[c->i] != ' '
@@ -27,7 +27,7 @@ void	replace_with_var_content(t_token *token, char *new_content, t_count *c,
 	current = current->next;
 }
 
-void	replace_vars(t_token *token, t_list *vars, int count)
+static void	replace_vars(t_token *token, t_list *vars, int count)
 {
 	t_list	*current;
 	char	*new_content;
@@ -56,7 +56,7 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 	token->arg = new_content;
 }
 
-void	count_size_with_vars(t_token *token, t_list *vars)
+static void	count_size_with_vars(t_token *token, t_list *vars)
 {
 	int		i;
 	int		count;

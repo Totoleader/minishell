@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:52:54 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 17:15:40 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:00:51 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			g_error_code;
 // 3. parse input (to commands)
 // 4. execute command
 // 5. go back to 1.
-void	minishell(t_minishell *mini)
+static void	minishell(t_minishell *mini)
 {
 	t_token		*tokens;
 	char		*input;

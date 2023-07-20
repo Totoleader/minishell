@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:30:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 12:04:32 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:54:01 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute_builtin(t_commands *cmds, t_minishell *mini)
 }
 
 //deals with commands that need to be forked/execve
-void	*execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
+static void	*execve_command(t_commands *cmds, t_minishell *mini, int *pipe_fd)
 {
 	int		pid;
 	char	**env_;

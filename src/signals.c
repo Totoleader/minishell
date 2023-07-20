@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:59:46 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/19 12:01:48 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 14:01:06 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_interactive(int signo)
+static void	sig_interactive(int signo)
 {
 	(void)signo;
 	g_error_code = 1;
@@ -22,7 +22,7 @@ void	sig_interactive(int signo)
 	rl_redisplay();
 }
 
-void	sig_heredoc(int signo)
+static void	sig_heredoc(int signo)
 {
 	t_minishell	*mini;
 
@@ -40,7 +40,7 @@ void	sig_heredoc(int signo)
 	}
 }
 
-void	sig_exec(int signo)
+static void	sig_exec(int signo)
 {
 	if (signo == SIGQUIT)
 		write(1, "Quit\n", 5);

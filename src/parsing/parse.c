@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:03:12 by macote            #+#    #+#             */
-/*   Updated: 2023/07/18 15:00:27 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:58:42 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	parse_to_list(char *input, t_list **tokens)
 }
 
 //assigns the type of the token so it can easily manipulated
-void	assign_type(t_token *token)
+static void	assign_type(t_token *token)
 {
 	if (!ft_strncmp(token->arg, "<", 2))
 		token->type = REDIR_IN;

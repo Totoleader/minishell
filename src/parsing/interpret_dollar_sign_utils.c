@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:10:56 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 13:42:16 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:56:17 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	dollar_sign_helper(char *args, t_list **vars, int *i)
 	(*i)++;
 }
 
-void	increment_counters(int *i, int *count)
+static void	increment_counters(int *i, int *count)
 {
 	(*i)++;
 	(*count)++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/19 12:02:51 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:52:43 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	convert_write(char *buf, int fd, t_minishell *mini)
 	}
 }
 
-void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
+static void	here_doc(t_commands *cmd, t_minishell *mini, int fd)
 {
 	char	*hd_buf;
 	int		first;

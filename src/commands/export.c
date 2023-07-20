@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:43:48 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/19 12:09:53 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:53:12 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	add_var(t_minishell *mini, char *arg)
 }
 
 //prints format like bash
-void	print_declare(t_minishell *mini)
+static void	print_declare(t_minishell *mini)
 {
 	t_list	*lst;
 	int		i;
