@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 12:09:14 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:44:30 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,6 @@ void	replace_with_var_content(t_token *token, char *new_content, t_count *c,
 	while (current->content && current->content[c->k])
 		new_content[c->j++] = current->content[c->k++];
 	current = current->next;
-}
-
-void	free_helper(t_token *token, t_list *vars)
-{
-	int		i;
-	t_list	*current;
-	char	*temp;
-
-	current = vars;
-	temp = token->arg;
-	i = 0;
-	while (current && ft_strnstr(temp, "$?", ft_strlen(temp)))
-	{
-		while (*temp && *temp != '$')
-			temp++;
-		if (!ft_strncmp(temp, "$?", 2))
-		{
-			temp = temp + 2;
-			free(current->content);
-			current = current->next;
-		}
-		else
-		{
-			temp++;
-			if (*temp != '$')
-				current = current->next;
-		}
-	}
 }
 
 void	replace_vars(t_token *token, t_list *vars, int count)
@@ -80,10 +52,7 @@ void	replace_vars(t_token *token, t_list *vars, int count)
 			new_content[c->j++] = token->arg[c->i++];
 		}
 	}
-	free(c);
-	free_helper(token, vars);
-	ft_lstclear(&vars);
-	free(token->arg);
+	clear_vars(token, vars, c);
 	token->arg = new_content;
 }
 
@@ -120,7 +89,6 @@ char	*get_var_env_name(char *str)
 	while (str[count] && str[count] != ' ' && str[count] != '$'
 		&& str[count] != '\'' && str[count] != '\"' && str[0] != '?')
 		count++;
-	
 	var_name = ft_calloc(sizeof(char), count + 1);
 	i = 0;
 	while (i < count)

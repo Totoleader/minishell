@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:11:59 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 13:16:09 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:34:24 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_calloc(size_t count, size_t size)
 	total = size * count;
 	ptr = NULL;
 	while (!ptr)
-		ptr = malloc(total);	
+		ptr = malloc(total);
 	while (i < total)
 	{
 		ptr[i] = 0;

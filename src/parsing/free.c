@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 16:05:04 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 11:58:43 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/20 13:44:03 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,40 @@ void	free_all(t_commands *cmds, t_minishell *mini)
 	free_mini(mini);
 	mini = NULL;
 	rl_clear_history();
+}
+
+static void	free_helper(t_token *token, t_list *vars)
+{
+	int		i;
+	t_list	*current;
+	char	*temp;
+
+	current = vars;
+	temp = token->arg;
+	i = 0;
+	while (current && ft_strnstr(temp, "$?", ft_strlen(temp)))
+	{
+		while (*temp && *temp != '$')
+			temp++;
+		if (!ft_strncmp(temp, "$?", 2))
+		{
+			temp = temp + 2;
+			free(current->content);
+			current = current->next;
+		}
+		else
+		{
+			temp++;
+			if (*temp != '$')
+				current = current->next;
+		}
+	}
+}
+
+void	clear_vars(t_token *token, t_list *vars, t_count *c)
+{
+	free(c);
+	free_helper(token, vars);
+	ft_lstclear(&vars);
+	free(token->arg);
 }

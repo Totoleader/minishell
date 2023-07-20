@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 12:01:00 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:43:18 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ t_minishell				*init_minishell(char **envp);
 void					free_cmds(t_commands *cmds);
 void					free_mini(t_minishell *mini);
 void					free_all(t_commands *cmds, t_minishell *mini);
+void					clear_vars(t_token *token, t_list *vars, t_count *c);
 
 //coomands helpers
 void					cmd_not_found(char *str);

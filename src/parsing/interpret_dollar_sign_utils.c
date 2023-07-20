@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpret_dollar_sign_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:10:56 by macote            #+#    #+#             */
-/*   Updated: 2023/07/19 11:26:55 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/20 13:42:16 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ void	dollar_sign_helper(char *args, t_list **vars, int *i)
 	(*i)++;
 }
 
+void	increment_counters(int *i, int *count)
+{
+	(*i)++;
+	(*count)++;
+}
+
 // count_size_with_vars() helper
 void	count_size_helper(char *args, int *i, int *count)
 {
@@ -52,10 +58,7 @@ void	count_size_helper(char *args, int *i, int *count)
 		(*count)++;
 		(*i)++;
 		while (args[(*i)] != '\'')
-		{
-			(*count)++;
-			(*i)++;
-		}
+			increment_counters(i, count);
 	}
 	else if (args[(*i)] == '$' && args[(*i) + 1] && args[(*i) + 1] != ' '
 		&& args[(*i) + 1] != '\'' && args[(*i) + 1] != '\"' && args[(*i)
@@ -69,8 +72,5 @@ void	count_size_helper(char *args, int *i, int *count)
 			(*i)++;
 	}
 	else if (args[(*i)])
-	{	
-		(*i)++;
-		(*count)++;
-	}
+		increment_counters(i, count);
 }
