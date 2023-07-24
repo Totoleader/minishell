@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:31:47 by macote            #+#    #+#             */
-/*   Updated: 2023/07/06 16:04:34 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/24 10:51:36 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ static int	count_strings(t_token *token)
 		{
 			quote = token->arg[i];
 			i++;
-			while (token->arg[i] && token->arg[i] != quote)
-			{
+			while (token->arg[i] && token->arg[i] != quote && ++i)
 				count++;
-				i++;
-			}
 			i++;
 		}
-		if (token->arg[i++])
+		if (token->arg[i] && token->arg[i] != '\"' && token->arg[i] != '\'')
+		{
 			count++;
+			i++;
+		}
 	}
 	return (count);
 }
