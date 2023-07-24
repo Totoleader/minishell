@@ -6,11 +6,16 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:04:35 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/19 12:07:37 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 07:39:05 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	is_valid_varname_char(char c)
+{
+	return ((c != '\"' && c != '\'' && ft_isalnum(c)) || c == '_');
+}
 
 static char	*get_varname(char *arg)
 {
@@ -18,13 +23,13 @@ static char	*get_varname(char *arg)
 	int		i;
 
 	i = 0;
-	while (arg[i] && arg[i] != ' ')
+	while (arg[i] && arg[i] != ' ' && is_valid_varname_char(arg[i]))
 		i++;
 	out = ft_calloc(i + 1, sizeof(char));
 	if (!out)
 		return (NULL);
 	i = 0;
-	while (arg[i] && arg[i] != ' ')
+	while (arg[i] && arg[i] != ' ' && is_valid_varname_char(arg[i]))
 	{
 		out[i] = arg[i];
 		i++;

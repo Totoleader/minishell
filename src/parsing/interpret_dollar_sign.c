@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 14:01:40 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:01:37 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,21 @@ static void	replace_vars(t_token *token, t_list *vars, int count)
 	t_list	*current;
 	char	*new_content;
 	t_count	*c;
+	int		in_quote;
 
 	c = ft_calloc(1, sizeof(t_count));
 	current = vars;
 	c->i = 0;
 	c->j = 0;
+	in_quote = 0;
 	new_content = ft_calloc(sizeof(char), count + 1);
 	while (c->j < count && token->arg[c->i])
 	{
-		if (find_delimiter(token, c))
+		if (!in_quote && token->arg[c->i] == '\'')
+			in_quote = 1;
+		else if (in_quote && token->arg[c->i] == '\'')
+			in_quote = 0;
+		if (find_delimiter(token, c) && !in_quote)
 		{
 			replace_with_var_content(token, new_content, c, current);
 			current = current->next;
