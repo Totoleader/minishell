@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 14:10:56 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 13:56:17 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:19:01 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	find_delimiter(t_token *token, t_count *c)
 // interpret_dollar_signs() helper
 void	dollar_sign_helper(char *args, t_list **vars, int *i)
 {
-	if (args[(*i)] == '\'' && ft_strchr(&args[(*i) + 1], '\''))
+	static int	within_dq = FALSE;
+
+	if (args[(*i)] == '\"')
+		within_dq = !within_dq;
+	if (args[(*i)] == '\'' && ft_strchr(&args[(*i) + 1], '\'') && !within_dq)
 	{
 		(*i)++;
 		while (args[(*i)] != '\'')

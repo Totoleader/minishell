@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 16:05:04 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 13:44:03 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:23:00 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ static void	free_helper(t_token *token, t_list *vars)
 	}
 }
 
-void	clear_vars(t_token *token, t_list *vars, t_count *c)
+void	clear_vars(t_token *token, t_list *vars, t_count *c, char *new_content)
 {
 	free(c);
 	free_helper(token, vars);
 	ft_lstclear(&vars);
 	free(token->arg);
+	token->arg = new_content;
 }

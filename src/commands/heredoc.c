@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:53:42 by scloutie          #+#    #+#             */
-/*   Updated: 2023/07/24 07:18:57 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:35:55 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	convert_write(char *buf, int fd, t_minishell *mini)
 	i = -1;
 	while (buf[++i])
 	{
-		
 		if (buf[i] == '$')
 			print_specialcase(mini, buf, fd, &i);
 		else

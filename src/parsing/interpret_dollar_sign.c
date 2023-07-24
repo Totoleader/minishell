@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:43:13 by macote            #+#    #+#             */
-/*   Updated: 2023/07/21 15:01:37 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:32:29 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,13 @@ static void	replace_vars(t_token *token, t_list *vars, int count)
 	t_count	*c;
 	int		in_quote;
 
-	c = ft_calloc(1, sizeof(t_count));
+	c = init_counter();
 	current = vars;
-	c->i = 0;
-	c->j = 0;
 	in_quote = 0;
 	new_content = ft_calloc(sizeof(char), count + 1);
 	while (c->j < count && token->arg[c->i])
 	{
-		if (!in_quote && token->arg[c->i] == '\'')
-			in_quote = 1;
-		else if (in_quote && token->arg[c->i] == '\'')
-			in_quote = 0;
+		check_inquotes(&in_quote, token->arg[c->i]);
 		if (find_delimiter(token, c) && !in_quote)
 		{
 			replace_with_var_content(token, new_content, c, current);
@@ -58,8 +53,7 @@ static void	replace_vars(t_token *token, t_list *vars, int count)
 			new_content[c->j++] = token->arg[c->i++];
 		}
 	}
-	clear_vars(token, vars, c);
-	token->arg = new_content;
+	clear_vars(token, vars, c, new_content);
 }
 
 static void	count_size_with_vars(t_token *token, t_list *vars)

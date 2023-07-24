@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macote <macote@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:20:09 by macote            #+#    #+#             */
-/*   Updated: 2023/07/14 14:28:04 by macote           ###   ########.fr       */
+/*   Updated: 2023/07/24 10:32:35 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_count	*init_counter(void)
+{
+	t_count	*c;
+
+	c = ft_calloc(1, sizeof(t_count));
+	c->i = 0;
+	c->j = 0;
+	return (c);
+}
+
+void	check_inquotes(int *in_quote, char c)
+{
+	if (!(*in_quote) && c == '\'')
+		*in_quote = 1;
+	else if (in_quote && c == '\'')
+		*in_quote = 0;
+}
 
 //helper to alloc_copy()
 static void	alloc_copy_special_cases(char *str, int *i)

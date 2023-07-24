@@ -6,7 +6,7 @@
 /*   By: scloutie <scloutie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:50:29 by macote            #+#    #+#             */
-/*   Updated: 2023/07/20 13:43:18 by scloutie         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:33:15 by scloutie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ void					count_size_helper(char *args, int *i, int *count);
 void					dollar_sign_helper(char *args, t_list **vars, int *i);
 int						find_delimiter(t_token *token, t_count	*c);
 char					*get_var_env_name(char *str);
+t_count					*init_counter(void);
+void					check_inquotes(int *in_quote, char c);
 
 //utils
 char					*ft_getenv(t_minishell *mini, const char *varname);
@@ -175,7 +177,8 @@ t_minishell				*init_minishell(char **envp);
 void					free_cmds(t_commands *cmds);
 void					free_mini(t_minishell *mini);
 void					free_all(t_commands *cmds, t_minishell *mini);
-void					clear_vars(t_token *token, t_list *vars, t_count *c);
+void					clear_vars(t_token *token, t_list *vars,
+							t_count *c, char *new_content);
 
 //coomands helpers
 void					cmd_not_found(char *str);
